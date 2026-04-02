@@ -31,6 +31,18 @@ def _normalize_text(s: str) -> str:
     return s.strip()
 
 
+def wholesale_line_skips_iphone_13_16_parsing(name_raw: str) -> bool:
+    """Планшеты в опте не разбирать как iPhone 13–16 (год «13» из дюймов Air и т.п.)."""
+    lowered = _normalize_text(name_raw).lower()
+    if re.search(r"\bipad\b", lowered):
+        return True
+    if re.search(r"\bair\s+(11|13)\s+m\d+", lowered):
+        return True
+    if re.search(r"\bpro\s+(11|12|13)\s+m\d+\b", lowered):
+        return True
+    return False
+
+
 def _is_blocked_country_flags(s: str) -> bool:
     lowered = s.lower()
 
@@ -465,6 +477,8 @@ def process_iphone_13_16_block(
 
     for name_raw, price_usd_raw in input_rows:
         if _is_blocked_country_flags(name_raw):
+            continue
+        if wholesale_line_skips_iphone_13_16_parsing(name_raw):
             continue
 
         key = _extract_year_variant_memory_color(name_raw)

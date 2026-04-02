@@ -1,0 +1,962 @@
+[
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Yellow"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Pink"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Yellow"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Pink"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Yellow"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Pink"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Yellow"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "base11",
+    "inch": "11",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Pink"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M2",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M3",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Silver"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Black"
+  },
+  {
+    "kind": "pro",
+    "inch": "13",
+    "chip": "M5",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Silver"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "Wi-Fi",
+    "color": "Starlight"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Gray"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Blue"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Purple"
+  },
+  {
+    "kind": "mini",
+    "inch": "",
+    "chip": "",
+    "memory": "512",
+    "conn": "LTE",
+    "color": "Starlight"
+  }
+]

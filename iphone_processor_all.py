@@ -253,6 +253,11 @@ def _extract_air_key(name_raw: str) -> Optional[DeviceKey]:
         return None
 
     lowered = s.lower()
+    # iPad Air в опте: «Air 11/13 … M…», не iPhone Air
+    if re.search(r"\bipad\b", lowered):
+        return None
+    if re.search(r"\bair\s+(11|13)\s+m\d+", lowered):
+        return None
     memory = None
     if re.search(r"\b512\b", lowered):
         memory = "512"
@@ -343,6 +348,9 @@ def _extract_iphone17_key(name_raw: str) -> Optional[DeviceKey]:
 
 
 def extract_device_key(name_raw: str) -> Optional[DeviceKey]:
+    # См. wholesale_line_skips_iphone_13_16_parsing — та же логика, что и в process_iphone_all.
+    if base_proc.wholesale_line_skips_iphone_13_16_parsing(name_raw):
+        return None
     # Priority matters: "Air" also contains "iPhone" sometimes, etc.
     key = _extract_iphone17_key(name_raw)
     if key is not None:
@@ -450,6 +458,9 @@ def process_iphone_all_from_text(
             if ka not in base:
                 continue
             _update_best_price(best_numeric, has_numeric, ka, price_byn)
+            continue
+
+        if base_proc.wholesale_line_skips_iphone_13_16_parsing(name_raw):
             continue
 
         ik = base_proc._extract_year_variant_memory_color(name_raw)
