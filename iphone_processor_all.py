@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Iterable, Iterator, Optional
 
 import iphone_processor as base_proc
+from price_merge import merge_min_byn
 
 
 @dataclass(frozen=True)
@@ -416,18 +417,15 @@ def load_all_iphone_base(
     return base_order, base_map
 
 
-def process_iphone_all_from_text(
+def collect_iphone_all_best_byn_from_text(
     input_text: str,
     *,
     input_format: str,
-    base_order: list[DeviceKey],
     base: dict[DeviceKey, dict],
     usd_to_byn: Decimal,
     markup_usd: Decimal,
-    missing_price_text: str = "по запросу",
-    delimiter_out: str = ";",
     include_cn_us_13_16: bool = False,
-) -> str:
+) -> tuple[dict[DeviceKey, int], set[DeviceKey]]:
     best_numeric: dict[DeviceKey, int] = {}
     has_numeric: set[DeviceKey] = set()
 
@@ -438,6 +436,9 @@ def process_iphone_all_from_text(
 
     for name_raw, price_raw in rows:
         if price_raw is None:
+            continue
+
+        if base_proc.wholesale_line_skips_all_iphone_row_processing(name_raw):
             continue
 
         price_usd = base_proc._try_parse_price_usd(price_raw)
@@ -477,7 +478,6 @@ def process_iphone_all_from_text(
         has_esim = bool(re.search(r"e\s*-?\s*sim|\besim\b", low))
 
         if include_cn_us_13_16:
-            # 1+1 — только строки без меток Китай/США; eSim/Dual — только с CN/US в опте.
             if not blocked:
                 k11 = DeviceKey(
                     family="iphone",
@@ -514,6 +514,18 @@ def process_iphone_all_from_text(
                 continue
             _update_best_price(best_numeric, has_numeric, core_key, price_byn)
 
+    return best_numeric, has_numeric
+
+
+def format_iphone_all_to_csv(
+    best_numeric: dict[DeviceKey, int],
+    has_numeric: set[DeviceKey],
+    *,
+    base_order: list[DeviceKey],
+    missing_price_text: str = "по запросу",
+    delimiter_out: str = ";",
+    include_cn_us_13_16: bool = False,
+) -> str:
     pairs: list[tuple[DeviceKey, str]] = []
     for key in base_order:
         if key.family == "iphone" and 13 <= key.year <= 16 and include_cn_us_13_16:
@@ -618,4 +630,76 @@ def process_iphone_all_from_text(
         else:
             rows.append(_csv_one_cell_row(L, delimiter_out))
     return "\n".join(rows) + ("\n" if rows else "")
+
+
+def process_iphone_all_from_text(
+    input_text: str,
+    *,
+    input_format: str,
+    base_order: list[DeviceKey],
+    base: dict[DeviceKey, dict],
+    usd_to_byn: Decimal,
+    markup_usd: Decimal,
+    missing_price_text: str = "по запросу",
+    delimiter_out: str = ";",
+    include_cn_us_13_16: bool = False,
+) -> str:
+    best, has_n = collect_iphone_all_best_byn_from_text(
+        input_text,
+        input_format=input_format,
+        base=base,
+        usd_to_byn=usd_to_byn,
+        markup_usd=markup_usd,
+        include_cn_us_13_16=include_cn_us_13_16,
+    )
+    return format_iphone_all_to_csv(
+        best,
+        has_n,
+        base_order=base_order,
+        missing_price_text=missing_price_text,
+        delimiter_out=delimiter_out,
+        include_cn_us_13_16=include_cn_us_13_16,
+    )
+
+
+def merge_iphone_all_from_texts(
+    raw_a: str,
+    raw_b: str,
+    *,
+    input_format: str,
+    base_order: list[DeviceKey],
+    base: dict[DeviceKey, dict],
+    usd_to_byn: Decimal,
+    markup_usd_a: Decimal,
+    markup_usd_b: Decimal,
+    missing_price_text: str = "по запросу",
+    delimiter_out: str = ";",
+    include_cn_us_13_16: bool = False,
+) -> str:
+    ba, _ = collect_iphone_all_best_byn_from_text(
+        raw_a,
+        input_format=input_format,
+        base=base,
+        usd_to_byn=usd_to_byn,
+        markup_usd=markup_usd_a,
+        include_cn_us_13_16=include_cn_us_13_16,
+    )
+    bb, _ = collect_iphone_all_best_byn_from_text(
+        raw_b,
+        input_format=input_format,
+        base=base,
+        usd_to_byn=usd_to_byn,
+        markup_usd=markup_usd_b,
+        include_cn_us_13_16=include_cn_us_13_16,
+    )
+    merged = merge_min_byn(ba, bb)
+    has_m = set(merged.keys())
+    return format_iphone_all_to_csv(
+        merged,
+        has_m,
+        base_order=base_order,
+        missing_price_text=missing_price_text,
+        delimiter_out=delimiter_out,
+        include_cn_us_13_16=include_cn_us_13_16,
+    )
 

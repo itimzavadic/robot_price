@@ -32,13 +32,31 @@ def _normalize_text(s: str) -> str:
 
 
 def wholesale_line_skips_iphone_13_16_parsing(name_raw: str) -> bool:
-    """Планшеты в опте не разбирать как iPhone 13–16 (год «13» из дюймов Air и т.п.)."""
+    """Планшеты / AirPods / MacBook в опте не разбирать как iPhone 13–16."""
     lowered = _normalize_text(name_raw).lower()
     if re.search(r"\bipad\b", lowered):
         return True
     if re.search(r"\bair\s+(11|13)\s+m\d+", lowered):
         return True
     if re.search(r"\bpro\s+(11|12|13)\s+m\d+\b", lowered):
+        return True
+    if re.search(r"\bair\s*pods?\b", lowered):
+        return True
+    if "\U0001f3a7" in name_raw:
+        return True
+    if re.search(r"\bmacbook\b", lowered):
+        return True
+    return False
+
+
+def wholesale_line_skips_all_iphone_row_processing(name_raw: str) -> bool:
+    """Строка относится к другой категории — не гонять через парсеры iPhone (17 / Air / 13–16)."""
+    lowered = _normalize_text(name_raw).lower()
+    if re.search(r"\bair\s*pods?\b", lowered):
+        return True
+    if "\U0001f3a7" in name_raw:
+        return True
+    if re.search(r"\bmacbook\b", lowered):
         return True
     return False
 

@@ -1,0 +1,13 @@
+[
+  { "slug": "ap2", "retail_core": "AirPods 2" },
+  { "slug": "ap3", "retail_core": "AirPods 3" },
+  { "slug": "ap4", "retail_core": "AirPods 4" },
+  { "slug": "ap4_anc", "retail_core": "AirPods 4 ANC" },
+  { "slug": "app2", "retail_core": "AirPods Pro 2" },
+  { "slug": "app3", "retail_core": "AirPods Pro 3" },
+  { "slug": "max_midnight", "retail_core": "AirPods Max (2024) Midnight" },
+  { "slug": "max_starlight", "retail_core": "AirPods Max (2024) Starlight" },
+  { "slug": "max_blue", "retail_core": "AirPods Max (2024) Blue" },
+  { "slug": "max_purple", "retail_core": "AirPods Max (2024) Purple" },
+  { "slug": "max_orange", "retail_core": "AirPods Max (2024) Orange" }
+]

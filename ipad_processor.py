@@ -11,6 +11,7 @@ from typing import Optional
 
 import iphone_processor as base_proc
 from iphone_processor import _iter_input_rows_from_string
+from price_merge import merge_min_byn
 
 IPAD_ICON = "\u25fe\ufe0f"
 
@@ -251,17 +252,14 @@ def load_ipad_base(path: Path) -> tuple[list[IpadKey], dict[IpadKey, dict]]:
     return order, base
 
 
-def process_ipad_from_text(
+def collect_ipad_best_byn_from_text(
     input_text: str,
     *,
     input_format: str,
-    base_order: list[IpadKey],
     base: dict[IpadKey, dict],
     usd_to_byn: Decimal,
     markup_usd: Decimal,
-    missing_price_text: str = "по запросу",
-    delimiter_out: str = ";",
-) -> str:
+) -> tuple[dict[IpadKey, int], set[IpadKey]]:
     best: dict[IpadKey, int] = {}
     has_price: set[IpadKey] = set()
 
@@ -271,6 +269,8 @@ def process_ipad_from_text(
         if "📱" in name_raw:
             continue
         if "⌚" in name_raw or "\u231a" in name_raw:
+            continue
+        if "\U0001f3a7" in name_raw or re.search(r"\bair\s*pods?\b", name_raw, flags=re.IGNORECASE):
             continue
 
         price_usd = base_proc._try_parse_price_usd(price_raw)
@@ -287,6 +287,17 @@ def process_ipad_from_text(
         if prev is None or byn < prev:
             best[key] = byn
 
+    return best, has_price
+
+
+def format_ipad_to_csv(
+    best: dict[IpadKey, int],
+    has_price: set[IpadKey],
+    *,
+    base_order: list[IpadKey],
+    missing_price_text: str,
+    delimiter_out: str,
+) -> str:
     pairs: list[tuple[IpadKey, str]] = []
     for key in base_order:
         if key in has_price:
@@ -303,3 +314,55 @@ def process_ipad_from_text(
         else:
             rows_out.append(_csv_one_cell_row(L, delimiter_out))
     return "\n".join(rows_out) + ("\n" if rows_out else "")
+
+
+def process_ipad_from_text(
+    input_text: str,
+    *,
+    input_format: str,
+    base_order: list[IpadKey],
+    base: dict[IpadKey, dict],
+    usd_to_byn: Decimal,
+    markup_usd: Decimal,
+    missing_price_text: str = "по запросу",
+    delimiter_out: str = ";",
+) -> str:
+    b, h = collect_ipad_best_byn_from_text(
+        input_text,
+        input_format=input_format,
+        base=base,
+        usd_to_byn=usd_to_byn,
+        markup_usd=markup_usd,
+    )
+    return format_ipad_to_csv(
+        b, h, base_order=base_order, missing_price_text=missing_price_text, delimiter_out=delimiter_out
+    )
+
+
+def merge_ipad_from_texts(
+    raw_a: str,
+    raw_b: str,
+    *,
+    input_format: str,
+    base_order: list[IpadKey],
+    base: dict[IpadKey, dict],
+    usd_to_byn: Decimal,
+    markup_usd_a: Decimal,
+    markup_usd_b: Decimal,
+    missing_price_text: str = "по запросу",
+    delimiter_out: str = ";",
+) -> str:
+    ba, _ = collect_ipad_best_byn_from_text(
+        raw_a, input_format=input_format, base=base, usd_to_byn=usd_to_byn, markup_usd=markup_usd_a
+    )
+    bb, _ = collect_ipad_best_byn_from_text(
+        raw_b, input_format=input_format, base=base, usd_to_byn=usd_to_byn, markup_usd=markup_usd_b
+    )
+    merged = merge_min_byn(ba, bb)
+    return format_ipad_to_csv(
+        merged,
+        set(merged.keys()),
+        base_order=base_order,
+        missing_price_text=missing_price_text,
+        delimiter_out=delimiter_out,
+    )
