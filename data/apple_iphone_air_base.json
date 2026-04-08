@@ -7,6 +7,11 @@
   { "family": "air", "year": 0, "variant": "", "memory": "512", "color": "Blue", "sim_variant": "eSim" },
   { "family": "air", "year": 0, "variant": "", "memory": "512", "color": "Black", "sim_variant": "eSim" },
   { "family": "air", "year": 0, "variant": "", "memory": "512", "color": "White", "sim_variant": "eSim" },
-  { "family": "air", "year": 0, "variant": "", "memory": "512", "color": "Gold", "sim_variant": "eSim" }
+  { "family": "air", "year": 0, "variant": "", "memory": "512", "color": "Gold", "sim_variant": "eSim" },
+
+  { "family": "air", "year": 0, "variant": "", "memory": "1TB", "color": "Black", "sim_variant": "eSim" },
+  { "family": "air", "year": 0, "variant": "", "memory": "1TB", "color": "Gold", "sim_variant": "eSim" },
+  { "family": "air", "year": 0, "variant": "", "memory": "1TB", "color": "White", "sim_variant": "eSim" },
+  { "family": "air", "year": 0, "variant": "", "memory": "1TB", "color": "Blue", "sim_variant": "eSim" }
 ]
 

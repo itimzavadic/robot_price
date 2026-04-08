@@ -123,6 +123,27 @@
       min-width: 0;
     }
     .col-label { flex-shrink: 0; margin-bottom: 0.35rem; }
+    .raw-field-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      flex-shrink: 0;
+      margin-bottom: 0.5rem;
+    }
+    .raw-field-head .col-label { margin-bottom: 0; }
+    button.btn-clear-raw {
+      width: auto;
+      flex-shrink: 0;
+      margin-left: 1rem;
+      padding: 0.28rem 0.55rem;
+      font-size: 0.75rem;
+      border: 1px solid #999;
+      background: #fff;
+      color: #222;
+    }
+    button.btn-clear-raw:hover { background: #f0f0f0; }
     textarea.col-textarea {
       flex: 1;
       width: 100%;
@@ -135,9 +156,12 @@
       border-radius: 6px;
       resize: vertical;
     }
+    .wrap-raw-b .raw-field-head {
+      margin-bottom: 0.2rem;
+    }
     textarea.col-textarea.raw-b {
       min-height: var(--textarea-merge-b-h);
-      margin-top: 0.5rem;
+      margin-top: 0.2rem;
       flex: 0 1 auto;
     }
     .out-area { background: #f8f9fa; }
@@ -209,7 +233,7 @@
         </div>
         <div class="field">
           <label for="markup-iphone" id="lbl-markup-a-iphone">Наценка, USD</label>
-          <input id="markup-iphone" type="number" step="0.01" min="0" value="100" />
+          <input id="markup-iphone" type="number" step="1" min="0" value="100" />
         </div>
         <label class="merge-toggle">
           <input type="checkbox" id="merge-iphone" />
@@ -218,7 +242,7 @@
         <p class="merge-hint" id="merge-hint-iphone" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
         <div class="field" id="wrap-markup-b-iphone" hidden>
           <label for="markup-b-iphone">Наценка прайса B, USD</label>
-          <input id="markup-b-iphone" type="number" step="0.01" min="0" value="100" />
+          <input id="markup-b-iphone" type="number" step="1" min="0" value="90" />
         </div>
         <div class="filters-panel" aria-label="Фильтры">
           <h2>Фильтры</h2>
@@ -248,10 +272,16 @@
         <div id="err-iphone" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-iphone" id="lbl-raw-a-iphone">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-iphone" id="lbl-raw-a-iphone">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-iphone">Очистить</button>
+        </div>
         <textarea id="raw-iphone" class="col-textarea" placeholder="📱15 Pro 128 Black 🇦🇪 - 900"></textarea>
-        <div id="wrap-raw-b-iphone" hidden>
-          <label class="col-label" for="raw-b-iphone">Опт B</label>
+        <div id="wrap-raw-b-iphone" class="wrap-raw-b" hidden>
+          <div class="raw-field-head">
+            <label class="col-label" for="raw-b-iphone">Опт B</label>
+            <button type="button" class="btn-clear-raw" data-clear-raw="raw-b-iphone">Очистить</button>
+          </div>
           <textarea id="raw-b-iphone" class="col-textarea raw-b" placeholder="Второй оптовый прайс той же категории"></textarea>
         </div>
       </section>
@@ -272,7 +302,7 @@
         </div>
         <div class="field">
           <label for="markup-watch" id="lbl-markup-a-watch">Наценка, USD</label>
-          <input id="markup-watch" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-watch" type="number" step="1" min="0" value="95" />
         </div>
         <label class="merge-toggle">
           <input type="checkbox" id="merge-watch" />
@@ -281,7 +311,7 @@
         <p class="merge-hint" id="merge-hint-watch" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
         <div class="field" id="wrap-markup-b-watch" hidden>
           <label for="markup-b-watch">Наценка прайса B, USD</label>
-          <input id="markup-b-watch" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-b-watch" type="number" step="1" min="0" value="85" />
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -307,10 +337,16 @@
         <div id="err-watch" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-watch" id="lbl-raw-a-watch">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-watch" id="lbl-raw-a-watch">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-watch">Очистить</button>
+        </div>
         <textarea id="raw-watch" class="col-textarea" placeholder="⌚️S11 46 Jet Black SB S/M - 375"></textarea>
-        <div id="wrap-raw-b-watch" hidden>
-          <label class="col-label" for="raw-b-watch">Опт B</label>
+        <div id="wrap-raw-b-watch" class="wrap-raw-b" hidden>
+          <div class="raw-field-head">
+            <label class="col-label" for="raw-b-watch">Опт B</label>
+            <button type="button" class="btn-clear-raw" data-clear-raw="raw-b-watch">Очистить</button>
+          </div>
           <textarea id="raw-b-watch" class="col-textarea raw-b"></textarea>
         </div>
       </section>
@@ -331,7 +367,7 @@
         </div>
         <div class="field">
           <label for="markup-ipad" id="lbl-markup-a-ipad">Наценка, USD</label>
-          <input id="markup-ipad" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-ipad" type="number" step="1" min="0" value="95" />
         </div>
         <label class="merge-toggle">
           <input type="checkbox" id="merge-ipad" />
@@ -340,7 +376,7 @@
         <p class="merge-hint" id="merge-hint-ipad" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
         <div class="field" id="wrap-markup-b-ipad" hidden>
           <label for="markup-b-ipad">Наценка прайса B, USD</label>
-          <input id="markup-b-ipad" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-b-ipad" type="number" step="1" min="0" value="85" />
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -366,10 +402,16 @@
         <div id="err-ipad" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-ipad" id="lbl-raw-a-ipad">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-ipad" id="lbl-raw-a-ipad">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-ipad">Очистить</button>
+        </div>
         <textarea id="raw-ipad" class="col-textarea" placeholder="◾️iPad 11 128 Blue - 380"></textarea>
-        <div id="wrap-raw-b-ipad" hidden>
-          <label class="col-label" for="raw-b-ipad">Опт B</label>
+        <div id="wrap-raw-b-ipad" class="wrap-raw-b" hidden>
+          <div class="raw-field-head">
+            <label class="col-label" for="raw-b-ipad">Опт B</label>
+            <button type="button" class="btn-clear-raw" data-clear-raw="raw-b-ipad">Очистить</button>
+          </div>
           <textarea id="raw-b-ipad" class="col-textarea raw-b"></textarea>
         </div>
       </section>
@@ -390,7 +432,7 @@
         </div>
         <div class="field">
           <label for="markup-airpods" id="lbl-markup-a-airpods">Наценка, USD</label>
-          <input id="markup-airpods" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-airpods" type="number" step="1" min="0" value="95" />
         </div>
         <label class="merge-toggle">
           <input type="checkbox" id="merge-airpods" />
@@ -399,7 +441,7 @@
         <p class="merge-hint" id="merge-hint-airpods" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
         <div class="field" id="wrap-markup-b-airpods" hidden>
           <label for="markup-b-airpods">Наценка прайса B, USD</label>
-          <input id="markup-b-airpods" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-b-airpods" type="number" step="1" min="0" value="85" />
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -425,10 +467,16 @@
         <div id="err-airpods" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-airpods" id="lbl-raw-a-airpods">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-airpods" id="lbl-raw-a-airpods">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-airpods">Очистить</button>
+        </div>
         <textarea id="raw-airpods" class="col-textarea" placeholder="🎧AirPods Pro 2 - 180"></textarea>
-        <div id="wrap-raw-b-airpods" hidden>
-          <label class="col-label" for="raw-b-airpods">Опт B</label>
+        <div id="wrap-raw-b-airpods" class="wrap-raw-b" hidden>
+          <div class="raw-field-head">
+            <label class="col-label" for="raw-b-airpods">Опт B</label>
+            <button type="button" class="btn-clear-raw" data-clear-raw="raw-b-airpods">Очистить</button>
+          </div>
           <textarea id="raw-b-airpods" class="col-textarea raw-b"></textarea>
         </div>
       </section>
@@ -449,7 +497,7 @@
         </div>
         <div class="field">
           <label for="markup-macbook" id="lbl-markup-a-macbook">Наценка, USD</label>
-          <input id="markup-macbook" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-macbook" type="number" step="1" min="0" value="110" />
         </div>
         <label class="merge-toggle">
           <input type="checkbox" id="merge-macbook" />
@@ -458,7 +506,7 @@
         <p class="merge-hint" id="merge-hint-macbook" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
         <div class="field" id="wrap-markup-b-macbook" hidden>
           <label for="markup-b-macbook">Наценка прайса B, USD</label>
-          <input id="markup-b-macbook" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-b-macbook" type="number" step="1" min="0" value="100" />
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -484,10 +532,16 @@
         <div id="err-macbook" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-macbook" id="lbl-raw-a-macbook">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-macbook" id="lbl-raw-a-macbook">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-macbook">Очистить</button>
+        </div>
         <textarea id="raw-macbook" class="col-textarea" placeholder="Полные строки 💻MacBook… или секции «Air 13″ M4 16/256:» + строки с артикулами"></textarea>
-        <div id="wrap-raw-b-macbook" hidden>
-          <label class="col-label" for="raw-b-macbook">Опт B</label>
+        <div id="wrap-raw-b-macbook" class="wrap-raw-b" hidden>
+          <div class="raw-field-head">
+            <label class="col-label" for="raw-b-macbook">Опт B</label>
+            <button type="button" class="btn-clear-raw" data-clear-raw="raw-b-macbook">Очистить</button>
+          </div>
           <textarea id="raw-b-macbook" class="col-textarea raw-b"></textarea>
         </div>
       </section>
@@ -508,23 +562,23 @@
         </div>
         <div class="field">
           <label for="markup-mixed-iphone">Наценка iPhone, USD</label>
-          <input id="markup-mixed-iphone" type="number" step="0.01" min="0" value="100" />
+          <input id="markup-mixed-iphone" type="number" step="1" min="0" value="100" />
         </div>
         <div class="field">
           <label for="markup-mixed-watch">Наценка Apple Watch, USD</label>
-          <input id="markup-mixed-watch" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-mixed-watch" type="number" step="1" min="0" value="95" />
         </div>
         <div class="field">
           <label for="markup-mixed-ipad">Наценка iPad, USD</label>
-          <input id="markup-mixed-ipad" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-mixed-ipad" type="number" step="1" min="0" value="95" />
         </div>
         <div class="field">
           <label for="markup-mixed-airpods">Наценка AirPods, USD</label>
-          <input id="markup-mixed-airpods" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-mixed-airpods" type="number" step="1" min="0" value="95" />
         </div>
         <div class="field">
           <label for="markup-mixed-macbook">Наценка MacBook, USD</label>
-          <input id="markup-mixed-macbook" type="number" step="0.01" min="0" value="95" />
+          <input id="markup-mixed-macbook" type="number" step="1" min="0" value="110" />
         </div>
         <div class="filters-panel" aria-label="Фильтры">
           <h2>Фильтры</h2>
@@ -554,7 +608,10 @@
         <div id="err-mixed" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <label class="col-label" for="raw-mixed">Оптовый прайс</label>
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-mixed">Оптовый прайс</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-mixed">Очистить</button>
+        </div>
         <textarea id="raw-mixed" class="col-textarea" placeholder="📱 ⌚ ◾️ 🎧 💻 в одном тексте"></textarea>
       </section>
       <section class="col col-out">
@@ -566,6 +623,12 @@
 
   <script>
     const $ = (id) => document.getElementById(id);
+    document.querySelectorAll(".btn-clear-raw[data-clear-raw]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const ta = $(btn.getAttribute("data-clear-raw"));
+        if (ta) ta.value = "";
+      });
+    });
     const lastFullCsv = {};
     const MISSING_MARKER = "- **по запросу**";
 

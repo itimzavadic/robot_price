@@ -158,9 +158,22 @@ def _sim_rank(s: str) -> int:
 
 
 def _retail_sort_key(key: DeviceKey) -> tuple:
-    """Сортировка розницы: поколение → вариант (Plus/Pro/…) → память → SIM → цвет. Air в конце."""
+    """Сортировка розницы. Air в конце.
+
+    iPhone 17: поколение → вариант → память → цвет → SIM (1+1 / eSim / Dual рядом по цвету).
+    Остальные iPhone: поколение → вариант → память → SIM → цвет.
+    """
     if key.family == "air":
         return (2, 0, 0, _memory_rank(key.memory), _sim_rank(key.sim_variant), key.color.lower())
+    if key.family == "iphone" and key.year == 17:
+        return (
+            0,
+            key.year,
+            _variant_rank_device(key),
+            _memory_rank(key.memory),
+            key.color.lower(),
+            _sim_rank(key.sim_variant),
+        )
     return (
         0,
         key.year,
@@ -260,7 +273,11 @@ def _extract_air_key(name_raw: str) -> Optional[DeviceKey]:
     if re.search(r"\bair\s+(11|13)\s+m\d+", lowered):
         return None
     memory = None
-    if re.search(r"\b512\b", lowered):
+    if re.search(r"\b2\s*tb\b|\b2tb\b", lowered):
+        memory = "2TB"
+    elif re.search(r"\b1\s*tb\b|\b1tb\b", lowered):
+        memory = "1TB"
+    elif re.search(r"\b512\b", lowered):
         memory = "512"
     elif re.search(r"\b256\b", lowered):
         memory = "256"
@@ -289,6 +306,10 @@ def _extract_iphone17_key(name_raw: str) -> Optional[DeviceKey]:
     is_17e = bool(re.search(r"\b17[еe]\b", lowered) or re.search(r"\b17\s+e\b", lowered))
     is_17 = bool(re.search(r"\b17\b", lowered))
     if not is_17e and not is_17:
+        return None
+
+    # Опт часто пишет «17 Air …» вместо iPhone Air — это не линейка 17.
+    if re.search(r"\b17\s+air\b", lowered):
         return None
 
     # Variant (17e раньше Pro, чтобы не перепутать с «17 Pro»)

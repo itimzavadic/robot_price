@@ -85,7 +85,7 @@ class MixedRetailRequest(BaseModel):
     markup_usd_ipad: Decimal
     markup_usd_airpods: Decimal
     markup_usd_macbook: Decimal = Field(
-        default=Decimal("95"), description="Наценка MacBook, USD (для смешанного прайса)."
+        default=Decimal("110"), description="Наценка MacBook, USD (для смешанного прайса)."
     )
     missing_price_text: str = "по запросу"
     delimiter_out: str = ";"

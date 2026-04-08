@@ -245,11 +245,8 @@ def _format_telegram_line_13_16(
     return f"{model} - **{missing_price_text}**"
 
 
-def _parse_price_usd(value: str) -> Decimal:
-    """
-    Парсит USD-цену из строки.
-    Если цена не числовая (например, "нету"), возвращает исключение.
-    """
+def _parse_price_usd_single(value: str) -> Decimal:
+    """Одна числовая цена USD (фрагмент без слэша между двумя оптами)."""
     v = value.strip()
     if not v:
         raise ValueError("empty")
@@ -258,16 +255,39 @@ def _parse_price_usd(value: str) -> Decimal:
         raise ValueError("missing")
 
     v = v.replace("$", "").replace("USD", "").strip()
-    # Keep digits and separators.
     v = re.sub(r"[^0-9.,]", "", v)
     if not v:
         raise ValueError("no digits")
-    # If both comma and dot exist, assume comma is thousands separator.
     if "," in v and "." in v:
         v = v.replace(",", "")
-    # Convert comma decimal to dot.
     v = v.replace(",", ".")
     return Decimal(v)
+
+
+def _parse_price_usd(value: str) -> Decimal:
+    """
+    Парсит USD-цену из строки.
+    Две и более цены через «/» (например 680/685 за 🇮🇳/🇪🇺) — берётся минимум.
+    Если цена не числовая (например, "нету"), возвращает исключение.
+    """
+    raw = value.strip()
+    if not raw:
+        raise ValueError("empty")
+
+    if "/" in raw:
+        parts = [p.strip() for p in raw.split("/") if p.strip()]
+        parsed: list[Decimal] = []
+        for p in parts:
+            try:
+                parsed.append(_parse_price_usd_single(p))
+            except ValueError:
+                continue
+        if len(parsed) >= 2:
+            return min(parsed)
+        if len(parsed) == 1:
+            return parsed[0]
+
+    return _parse_price_usd_single(raw)
 
 
 def _try_parse_price_usd(value: str) -> Optional[Decimal]:
