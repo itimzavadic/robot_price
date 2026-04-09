@@ -47,6 +47,7 @@ uvicorn fastapi_app:app --reload --host 127.0.0.1 --port 8000
 | POST | `/process/airpods` | AirPods |
 | POST | `/process/macbook` | MacBook |
 | POST | `/process/mixed` | Смешанный прайс, свои наценки USD по категориям |
+| POST | `/process/iphone-17-site` | Розница iPhone 17 + Air (BYN без пересчёта): min BYN на «память + цвет» внутри линейки, в названии без SIM |
 
 Ответы обработки — **CSV** с заголовком `Content-Disposition` для скачивания файла.
 

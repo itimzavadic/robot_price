@@ -25,6 +25,7 @@ from iphone_processor_all import (
     DeviceKey,
     load_all_iphone_base,
     merge_iphone_all_from_texts,
+    process_iphone17_site_from_text,
     process_iphone_all_from_text,
 )
 from mixed_processor import process_mixed_retail_from_text
@@ -73,6 +74,17 @@ class IphoneAllRequest(BaseModel):
     missing_price_text: str = "по запросу"
     delimiter_out: str = ";"
     include_cn_us_13_16: bool = False
+
+
+class Iphone17SiteRequest(BaseModel):
+    """Розничный прайс iPhone 17 и iPhone Air для сайта: BYN как во входе (без курса и наценки)."""
+
+    raw: str = Field(
+        ...,
+        description="Розница по 17e / 17 / Pro / Pro Max и iPhone Air — цены в BYN (как из вкладки iPhone).",
+    )
+    input_format: Literal["auto", "text", "csv"] = "auto"
+    delimiter_out: str = ";"
 
 
 class MixedRetailRequest(BaseModel):
@@ -146,6 +158,21 @@ def health() -> dict[str, str]:
 def index_page() -> FileResponse:
     """Минимальный фронтенд: вставка оптового прайса и запуск обработки."""
     return FileResponse(Path(__file__).parent / "static" / "index.html")
+
+
+@app.post("/process/iphone-17-site", response_class=Response)
+def process_iphone_17_site(req: Iphone17SiteRequest) -> Response:
+    csv_text = process_iphone17_site_from_text(
+        req.raw,
+        input_format=req.input_format,
+        base=BASE,
+        delimiter_out=req.delimiter_out,
+    )
+    return Response(
+        content=csv_text,
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="iphone_17_site.csv"'},
+    )
 
 
 @app.post("/process/iphone-all", response_class=Response)

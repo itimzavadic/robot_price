@@ -297,6 +297,24 @@ def _try_parse_price_usd(value: str) -> Optional[Decimal]:
         return None
 
 
+def _try_parse_price_byn(value: str) -> Optional[int]:
+    """Розничная цена в BYN из ячейки прайса (цифры, пробелы-разделители, суффикс BYN, ** из Telegram)."""
+    s = value.strip()
+    if not s:
+        return None
+    s = re.sub(r"\*+", "", s)
+    low = s.lower()
+    for word in ("byn", "брн", "руб", "brn"):
+        low = low.replace(word, "")
+    digits = re.sub(r"\D", "", low)
+    if not digits:
+        return None
+    n = int(digits)
+    if n <= 0:
+        return None
+    return n
+
+
 def round_to_tens(byn: Decimal) -> int:
     """
     Округление до числа, которое оканчивается на 0.

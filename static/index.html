@@ -221,6 +221,7 @@
     <button type="button" class="tab-btn" data-tab="airpods">AirPods</button>
     <button type="button" class="tab-btn" data-tab="macbook">MacBook</button>
     <button type="button" class="tab-btn" data-tab="mixed">Смешанный прайс</button>
+    <button type="button" class="tab-btn" data-tab="iphone17site">Сайт: 17 + Air</button>
   </nav>
 
   <!-- iPhone -->
@@ -621,6 +622,43 @@
     </div>
   </div>
 
+  <!-- Розница iPhone 17 → сжатый список для сайта (BYN без пересчёта) -->
+  <div id="panel-iphone17site" class="tab-panel" role="tabpanel">
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="filter-hint" style="margin:0 0 0.75rem;line-height:1.4;">
+          Вставьте <strong>уже розничный</strong> прайс по <strong>17e, 17, Pro, Pro Max</strong> и <strong>iPhone Air</strong> (цены в <strong>BYN</strong> — как после вкладки «iPhone»). Курс и наценка <strong>не применяются</strong>.
+          По каждой линейке (для Air — по памяти и цвету) остаётся одна строка — с <strong>минимальной</strong> ценой среди вариантов SIM; в названии SIM не пишется.
+        </p>
+        <div class="field">
+          <label for="fmt-iphone17site">Формат входа</label>
+          <select id="fmt-iphone17site">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="button" id="btn-iphone17site">Сформировать</button>
+          <button type="button" id="btnDl-iphone17site" class="secondary" disabled>Скачать CSV</button>
+          <span id="status-iphone17site" class="status"></span>
+        </div>
+        <div id="err-iphone17site" class="err" hidden></div>
+      </aside>
+      <section class="col col-in">
+        <div class="raw-field-head">
+          <label class="col-label" for="raw-iphone17site">Розничный прайс (17 + Air)</label>
+          <button type="button" class="btn-clear-raw" data-clear-raw="raw-iphone17site">Очистить</button>
+        </div>
+        <textarea id="raw-iphone17site" class="col-textarea" placeholder="📱17 256 Black eSim - **3330 BYN**&#10;📱Air 256 Black eSim - **3100 BYN**"></textarea>
+      </section>
+      <section class="col col-out">
+        <label class="col-label" for="out-iphone17site">Для сайта</label>
+        <textarea id="out-iphone17site" class="col-textarea out-area" readonly placeholder="Минимум BYN на память+цвет, без SIM"></textarea>
+      </section>
+    </div>
+  </div>
+
   <script>
     const $ = (id) => document.getElementById(id);
     document.querySelectorAll(".btn-clear-raw[data-clear-raw]").forEach((btn) => {
@@ -831,6 +869,66 @@
       runCategoryTab("iphone", "/process/iphone", () => ({
         include_cn_us_13_16: $("includeCnUs-iphone").checked,
       }));
+    });
+
+    $("btn-iphone17site").addEventListener("click", async () => {
+      const err = $("err-iphone17site");
+      err.hidden = true;
+      err.textContent = "";
+      $("status-iphone17site").textContent = "";
+      $("btn-iphone17site").disabled = true;
+      $("out-iphone17site").value = "";
+      $("btnDl-iphone17site").disabled = true;
+
+      const raw = $("raw-iphone17site").value;
+
+      if (!raw.trim()) {
+        err.textContent = "Вставьте розничный прайс: iPhone 17 / 17e / Pro / Pro Max и при необходимости Air (цены в BYN).";
+        err.hidden = false;
+        $("btn-iphone17site").disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch("/process/iphone-17-site", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            raw,
+            input_format: $("fmt-iphone17site").value,
+            delimiter_out: ";",
+          }),
+        });
+        const text = await res.text();
+        if (!res.ok) {
+          err.textContent = "Ошибка сервера: " + res.status + " — " + text.slice(0, 500);
+          err.hidden = false;
+          return;
+        }
+        $("out-iphone17site").value = text;
+        $("btnDl-iphone17site").disabled = false;
+        const n = text.trim() ? text.trimEnd().split(/\r?\n/).length : 0;
+        $("status-iphone17site").textContent =
+          n
+            ? "Готово. Строк: " + n + "."
+            : "Нет распознанных строк (iPhone 17 / Air) — проверьте текст и цены в BYN.";
+      } catch (e) {
+        err.textContent = "Не удалось связаться с сервером. Запущен ли uvicorn?";
+        err.hidden = false;
+      } finally {
+        $("btn-iphone17site").disabled = false;
+      }
+    });
+
+    $("btnDl-iphone17site").addEventListener("click", () => {
+      const payload = $("out-iphone17site").value;
+      if (!payload.trim()) return;
+      const blob = new Blob([payload], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "iphone_17_site.csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
     });
     $("btn-watch").addEventListener("click", () => {
       runCategoryTab("watch", "/process/watch", () => ({}));
