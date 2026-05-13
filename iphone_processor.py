@@ -7,6 +7,7 @@ from io import StringIO
 import json
 import re
 import sys
+import unicodedata
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
@@ -57,6 +58,56 @@ def wholesale_line_skips_all_iphone_row_processing(name_raw: str) -> bool:
     if "\U0001f3a7" in name_raw:
         return True
     if re.search(r"\bmacbook\b", lowered):
+        return True
+    return False
+
+
+def wholesale_iphone_line_indicates_dual_physical_sim(name_raw: str) -> bool:
+    """
+    Оптовая строка явно про две физические SIM (Dual / 2 SIM).
+    Такие позиции не смешиваем с общим прайсом 1+1, пока выключен фильтр
+    CN/US с раздельными вариантами SIM для iPhone 13–16.
+    """
+    s = _normalize_text(name_raw)
+    lowered = s.lower()
+    if re.search(r"\bdual\b", lowered):
+        return True
+    compact = re.sub(r"\s+", "", lowered)
+    if re.search(r"\b2\s*sim\b", lowered) or "2sim" in compact:
+        return True
+    return False
+
+
+# regional indicator sequence for Hong Kong (same display as 🇭🇰, survives some copy forms)
+_RI_HK = "\U0001f1ed\U0001f1f0"
+
+
+def wholesale_iphone_line_indicates_hk_region(*texts: str) -> bool:
+    """
+    Гонконгская версия (флаг/маркер HK): в опте обычно dual nano-SIM.
+    В передавайте все фрагменты строки (название, цена, остальные ячейки CSV), где может быть флаг.
+    """
+    parts = [unicodedata.normalize("NFKC", t) for t in texts if t and t.strip()]
+    if not parts:
+        return False
+    s = "\u241e".join(parts)
+    if "🇭🇰" in s or _RI_HK in s:
+        return True
+    s = _normalize_text(s)
+    lowered = s.lower()
+    if re.search(r"\bhong\s+kong\b", lowered):
+        return True
+    if re.search(r"\bгонконг\b", lowered):
+        return True
+    if re.search(r"港版|香港", s):
+        return True
+    if re.search(r"[\[({<]hk[\]})>]", lowered):
+        return True
+    if re.search(r"[/|]hk\b", lowered) or re.search(r"\bhk[/|]", lowered):
+        return True
+    if re.search(r"(?<![a-z0-9_])hk(?![a-z0-9_])", lowered):
+        return True
+    if re.search(r"(?i)(?:white|black|natural|blue|green|gold|orange|pink|red|gray|grey|yellow|titanium)hk\b", lowered):
         return True
     return False
 
@@ -471,6 +522,59 @@ def _iter_input_rows_from_string(input_text: str, *, input_format: str) -> Itera
         yield from _iter_input_rows_text_from_string(input_text)
 
 
+def _iter_csv_rows_with_context_from_string(input_text: str) -> Iterator[tuple[str, str, str]]:
+    """(name, price, row_context) — в row_context все ячейки строки (для флагов в 3+ колонке)."""
+    delimiter = ";"
+    if "\t" in input_text:
+        delimiter = "\t"
+    elif "," in input_text and ";" not in input_text:
+        delimiter = ","
+    reader = csv.reader(StringIO(input_text), delimiter=delimiter)
+    for row_idx, row in enumerate(reader, start=1):
+        if not row or len(row) < 2:
+            continue
+        name = row[0].strip()
+        price_raw = row[1].strip()
+        if row_idx == 1:
+            if _try_parse_price_usd(price_raw) is None:
+                continue
+        row_ctx = " ".join(c.strip() for c in row if c and c.strip())
+        yield name, price_raw, row_ctx
+
+
+def _iter_text_rows_with_context_from_string(input_text: str) -> Iterator[tuple[str, str, str]]:
+    for line in input_text.splitlines():
+        s = line.strip()
+        if not s or "-" not in s:
+            continue
+        left, right = s.rsplit("-", 1)
+        name, price_raw = left.strip(), right.strip()
+        if not name:
+            continue
+        yield name, price_raw, s
+
+
+def _iter_iphone_pricing_rows_from_string(input_text: str, *, input_format: str) -> Iterator[tuple[str, str, str]]:
+    """
+    Строки опта для iPhone-розницы: имя, цена, полный контекст для детекции региона (вся линия или все ячейки CSV).
+    Согласовано с _iter_input_rows_from_string (включая auto).
+    """
+    if input_format == "text":
+        yield from _iter_text_rows_with_context_from_string(input_text)
+        return
+    if input_format == "csv":
+        yield from _iter_csv_rows_with_context_from_string(input_text)
+        return
+    stripped = input_text.strip()
+    if not stripped:
+        return
+    first_line = stripped.splitlines()[0]
+    if ";" in first_line or "," in first_line or "\t" in first_line:
+        yield from _iter_csv_rows_with_context_from_string(input_text)
+    else:
+        yield from _iter_text_rows_with_context_from_string(input_text)
+
+
 def process_iphone_13_16_from_text(
     input_text: str,
     *,
@@ -533,6 +637,10 @@ def process_iphone_13_16_block(
 
     for name_raw, price_usd_raw in input_rows:
         if _is_blocked_country_flags(name_raw):
+            continue
+        if wholesale_iphone_line_indicates_dual_physical_sim(name_raw):
+            continue
+        if wholesale_iphone_line_indicates_hk_region(name_raw, price_usd_raw or ""):
             continue
         if wholesale_line_skips_iphone_13_16_parsing(name_raw):
             continue

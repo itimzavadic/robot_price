@@ -30,6 +30,7 @@ class IpadKey:
     memory: str
     conn: str  # Wi-Fi | LTE
     color: str
+    year: str = ""  # год поколения в ключе/базе и при разборе опта; в рознице не выводится
 
 
 def _strip_noise(s: str) -> str:
@@ -46,6 +47,8 @@ def _strip_noise(s: str) -> str:
         if not m:
             break
         s = s[: m.start()].rstrip()
+    s = re.sub(r"nano[- ]?texture\s+glass\s*", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"\b1\s*tb\b", "1024 ", s, flags=re.IGNORECASE)
     # «128Gb» / «256GB» слитно с цифрами — для парсера то же, что «128 » / «256 »
     s = re.sub(r"(\d+)\s*gb\b", r"\1 ", s, flags=re.IGNORECASE)
     s = re.sub(r"(\d+)\s*tb\b", r"\1 ", s, flags=re.IGNORECASE)
@@ -81,8 +84,14 @@ def _color_canon(raw: str, *, pro: bool = False) -> Optional[str]:
     return None
 
 
-_re_base = re.compile(
-    r"ipad\s+11\s+(\d+)\s+(?:(wifi|wi\s*fi|wi-?fi|lte|5g|cellular)\s+)?(blue|yellow|silver|pink)\b",
+# Опт: «11 2025 5G 128 Blue» — связь до памяти
+_re_base_conn_first = re.compile(
+    r"ipad\s+11\s+(?:(20\d{2})\s+)?(?:(wifi|wi\s*fi|wi-?fi|lte|5g|cellular)\s+)?(\d+)\s+(blue|yellow|silver|pink)\b",
+    re.IGNORECASE,
+)
+# Опт: «11 128 Wi-Fi Blue» / «11 128 LTE Blue» — память, затем связь
+_re_base_mem_first = re.compile(
+    r"ipad\s+11\s+(?:(20\d{2})\s+)?(\d+)\s+(?:(wifi|wi\s*fi|wi-?fi|lte|5g|cellular)\s+)?(blue|yellow|silver|pink)\b",
     re.IGNORECASE,
 )
 _re_mini = re.compile(
@@ -90,38 +99,83 @@ _re_mini = re.compile(
     re.IGNORECASE,
 )
 _CONN = r"(?:wifi|wi\s*fi|wi-?fi|lte|5g|cellular)"
+_NANO_GLASS = r"(?:nano[- ]?texture\s+glass\s+)?"
+_YEAR_OPT = r"(?:(20\d{2})\s+)?"
 _re_air_ipad_cm = re.compile(
-    rf"ipad\s+air\s+(\d{{2}})\s*(?:inch\s*)?(?:2024\s+)?(m\d+)\s+((?:{_CONN})\s+)?(\d+)\s+(gray|grey|blue|purple|starlight)\b",
+    rf"ipad\s+air\s+(\d{{2}})\s*(?:inch\s*)?{_YEAR_OPT}(m\d+)\s+((?:{_CONN})\s+)?(\d+)\s+(gray|grey|blue|purple|starlight)\b",
     re.IGNORECASE,
 )
 _re_air_ipad_mc = re.compile(
-    rf"ipad\s+air\s+(\d{{2}})\s*(?:inch\s*)?(?:2024\s+)?(m\d+)\s+(\d+)\s+((?:{_CONN})\s+)?(gray|grey|blue|purple|starlight)\b",
+    rf"ipad\s+air\s+(\d{{2}})\s*(?:inch\s*)?{_YEAR_OPT}(m\d+)\s+(\d+)\s+((?:{_CONN})\s+)?(gray|grey|blue|purple|starlight)\b",
     re.IGNORECASE,
 )
 _re_air_plain_cm = re.compile(
-    rf"^air\s+(\d{{2}})\s+(m\d+)\s+((?:{_CONN})\s+)?(\d+)\s+(gray|grey|blue|purple|starlight)\b",
+    rf"^air\s+(\d{{2}})\s+{_YEAR_OPT}(m\d+)\s+((?:{_CONN})\s+)?(\d+)\s+(gray|grey|blue|purple|starlight)\b",
     re.IGNORECASE,
 )
 _re_air_plain_mc = re.compile(
-    rf"^air\s+(\d{{2}})\s+(m\d+)\s+(\d+)\s+((?:{_CONN})\s+)?(gray|grey|blue|purple|starlight)\b",
+    rf"^air\s+(\d{{2}})\s+{_YEAR_OPT}(m\d+)\s+(\d+)\s+((?:{_CONN})\s+)?(gray|grey|blue|purple|starlight)\b",
     re.IGNORECASE,
 )
 _re_pro_ipad_cm = re.compile(
-    rf"ipad\s+pro\s+(\d{{2}})\s*(?:inch\s*)?(m[45])\s+((?:{_CONN})\s+)?(\d+)\s+(black|silver)\b",
+    rf"ipad\s+pro\s+(\d{{2}})\s*(?:inch\s*)?{_YEAR_OPT}(m[45])\s+{_NANO_GLASS}((?:{_CONN})\s+)?(\d+)\s+(black|silver)\b",
     re.IGNORECASE,
 )
 _re_pro_ipad_mc = re.compile(
-    rf"ipad\s+pro\s+(\d{{2}})\s*(?:inch\s*)?(m[45])\s+(\d+)\s+((?:{_CONN})\s+)?(black|silver)\b",
+    rf"ipad\s+pro\s+(\d{{2}})\s*(?:inch\s*)?{_YEAR_OPT}(m[45])\s+{_NANO_GLASS}(\d+)\s+((?:{_CONN})\s+)?(black|silver)\b",
     re.IGNORECASE,
 )
 _re_pro_plain_cm = re.compile(
-    rf"^pro\s+(\d{{2}})\s+(m[45])\s+((?:{_CONN})\s+)?(\d+)\s+(black|silver)\b",
+    rf"^pro\s+(\d{{2}})\s+{_YEAR_OPT}(m[45])\s+{_NANO_GLASS}((?:{_CONN})\s+)?(\d+)\s+(black|silver)\b",
     re.IGNORECASE,
 )
 _re_pro_plain_mc = re.compile(
-    rf"^pro\s+(\d{{2}})\s+(m[45])\s+(\d+)\s+((?:{_CONN})\s+)?(black|silver)\b",
+    rf"^pro\s+(\d{{2}})\s+{_YEAR_OPT}(m[45])\s+{_NANO_GLASS}(\d+)\s+((?:{_CONN})\s+)?(black|silver)\b",
     re.IGNORECASE,
 )
+
+
+def _default_year_for(kind: str, chip: str) -> str:
+    if kind == "base11":
+        return "2025"
+    if kind == "mini":
+        return ""
+    ch = chip.upper()
+    if kind == "air":
+        return {"M2": "2024", "M3": "2025", "M4": "2026"}.get(ch, "")
+    if kind == "pro":
+        return {"M4": "2024", "M5": "2025"}.get(ch, "")
+    return ""
+
+
+def _canonical_year(kind: str, chip: str, raw_year: str) -> str:
+    y = (raw_year or "").strip()
+    return y or _default_year_for(kind, chip)
+
+
+def _resolve_ipad_key(
+    ipad_map: dict[IpadKey, dict],
+    *,
+    kind: str,
+    inch: str,
+    chip: str,
+    memory: str,
+    conn: str,
+    color: str,
+    year_from_line: Optional[str],
+) -> Optional[IpadKey]:
+    y_line = (year_from_line or "").strip()
+    default_y = _default_year_for(kind, chip)
+    years_try: list[str] = []
+    for y in (y_line, default_y, ""):
+        if y in years_try:
+            continue
+        years_try.append(y)
+    for y in years_try:
+        k = IpadKey(kind, inch, chip, memory, conn, color, year=y)
+        if k in ipad_map:
+            return k
+    return None
 
 
 def _parse_ipad_name(name_raw: str, ipad_map: dict[IpadKey, dict]) -> Optional[IpadKey]:
@@ -137,50 +191,118 @@ def _parse_ipad_name(name_raw: str, ipad_map: dict[IpadKey, dict]) -> Optional[I
         c = _color_canon(col, pro=False)
         if c is None:
             return None
-        key = IpadKey("mini", "", "", mem, conn, c)
+        key = IpadKey("mini", "", "", mem, conn, c, year="")
         return key if key in ipad_map else None
 
-    m = _re_base.search(low)
+    m = _re_base_conn_first.search(low)
     if m:
-        mem, ctok, col = m.group(1), m.group(2), m.group(3)
+        y_line, ctok, mem, col = m.group(1), m.group(2), m.group(3), m.group(4)
         conn = _conn_from_token(ctok) or "Wi-Fi"
         c = _color_canon(col, pro=False)
         if c is None:
             return None
-        key = IpadKey("base11", "11", "", mem, conn, c)
-        return key if key in ipad_map else None
+        return _resolve_ipad_key(
+            ipad_map,
+            kind="base11",
+            inch="11",
+            chip="",
+            memory=mem,
+            conn=conn,
+            color=c,
+            year_from_line=y_line,
+        )
+
+    m = _re_base_mem_first.search(low)
+    if m:
+        y_line, mem, ctok, col = m.group(1), m.group(2), m.group(3), m.group(4)
+        conn = _conn_from_token(ctok) or "Wi-Fi"
+        c = _color_canon(col, pro=False)
+        if c is None:
+            return None
+        return _resolve_ipad_key(
+            ipad_map,
+            kind="base11",
+            inch="11",
+            chip="",
+            memory=mem,
+            conn=conn,
+            color=c,
+            year_from_line=y_line,
+        )
 
     for rx in (_re_air_ipad_cm, _re_air_ipad_mc, _re_air_plain_cm, _re_air_plain_mc):
         m = rx.search(low)
         if m:
-            inch, chip = m.group(1), m.group(2).upper()
             if rx in (_re_air_ipad_cm, _re_air_plain_cm):
-                ctok, mem, col = m.group(3), m.group(4), m.group(5)
+                inch, y_line, chip, ctok, mem, col = (
+                    m.group(1),
+                    m.group(2),
+                    m.group(3).upper(),
+                    m.group(4),
+                    m.group(5),
+                    m.group(6),
+                )
             else:
-                mem, ctok, col = m.group(3), m.group(4), m.group(5)
+                inch, y_line, chip, mem, ctok, col = (
+                    m.group(1),
+                    m.group(2),
+                    m.group(3).upper(),
+                    m.group(4),
+                    m.group(5),
+                    m.group(6),
+                )
             ctok = (ctok or "").strip() or None
             conn = _conn_from_token(ctok) or "Wi-Fi"
             c = _color_canon(col, pro=False)
             if c is None:
                 return None
-            key = IpadKey("air", inch, chip, mem, conn, c)
-            return key if key in ipad_map else None
+            return _resolve_ipad_key(
+                ipad_map,
+                kind="air",
+                inch=inch,
+                chip=chip,
+                memory=mem,
+                conn=conn,
+                color=c,
+                year_from_line=y_line,
+            )
 
     for rx in (_re_pro_ipad_cm, _re_pro_ipad_mc, _re_pro_plain_cm, _re_pro_plain_mc):
         m = rx.search(low)
         if m:
-            inch, chip = m.group(1), m.group(2).upper()
             if rx in (_re_pro_ipad_cm, _re_pro_plain_cm):
-                ctok, mem, col = m.group(3), m.group(4), m.group(5)
+                inch, y_line, chip, ctok, mem, col = (
+                    m.group(1),
+                    m.group(2),
+                    m.group(3).upper(),
+                    m.group(4),
+                    m.group(5),
+                    m.group(6),
+                )
             else:
-                mem, ctok, col = m.group(3), m.group(4), m.group(5)
+                inch, y_line, chip, mem, ctok, col = (
+                    m.group(1),
+                    m.group(2),
+                    m.group(3).upper(),
+                    m.group(4),
+                    m.group(5),
+                    m.group(6),
+                )
             ctok = (ctok or "").strip() or None
             conn = _conn_from_token(ctok) or "Wi-Fi"
             c = _color_canon(col, pro=True)
             if c is None:
                 return None
-            key = IpadKey("pro", inch, chip, mem, conn, c)
-            return key if key in ipad_map else None
+            return _resolve_ipad_key(
+                ipad_map,
+                kind="pro",
+                inch=inch,
+                chip=chip,
+                memory=mem,
+                conn=conn,
+                color=c,
+                year_from_line=y_line,
+            )
 
     return None
 
@@ -208,12 +330,12 @@ def _csv_one_cell_row(value: str, delimiter: str) -> str:
 
 def _ipad_group(k: IpadKey) -> tuple:
     if k.kind == "base11":
-        return ("base11",)
+        return ("base11", k.year)
     if k.kind == "mini":
         return ("mini",)
     if k.kind == "air":
-        return ("air", k.inch, k.chip)
-    return ("pro", k.inch, k.chip)
+        return ("air", k.inch, k.chip, k.year)
+    return ("pro", k.inch, k.chip, k.year)
 
 
 def _inject_ipad_separators(pairs: list[tuple[IpadKey, str]]) -> list[str]:
@@ -239,16 +361,21 @@ def load_ipad_base(path: Path) -> tuple[list[IpadKey], dict[IpadKey, dict]]:
     order: list[IpadKey] = []
     base: dict[IpadKey, dict] = {}
     for item in data:
+        kind = str(item["kind"])
+        chip = str(item.get("chip", ""))
+        raw_year = str(item.get("year", ""))
+        year = _canonical_year(kind, chip, raw_year)
         key = IpadKey(
-            kind=str(item["kind"]),
+            kind=kind,
             inch=str(item.get("inch", "")),
-            chip=str(item.get("chip", "")),
+            chip=chip,
             memory=str(item["memory"]),
             conn=str(item["conn"]),
             color=str(item["color"]),
+            year=year,
         )
         order.append(key)
-        base[key] = item
+        base[key] = {**item, "year": year}
     return order, base
 
 

@@ -5,7 +5,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -13,7 +14,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Yellow"
+    "color": "Yellow",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -21,7 +23,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -29,7 +32,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Pink"
+    "color": "Pink",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -37,7 +41,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -45,7 +50,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Yellow"
+    "color": "Yellow",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -53,7 +59,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -61,7 +68,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Pink"
+    "color": "Pink",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -69,7 +77,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -77,7 +86,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Yellow"
+    "color": "Yellow",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -85,7 +95,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -93,7 +104,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Pink"
+    "color": "Pink",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -101,7 +113,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -109,7 +122,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Yellow"
+    "color": "Yellow",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -117,7 +131,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "base11",
@@ -125,7 +140,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Pink"
+    "color": "Pink",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -133,7 +149,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -141,7 +158,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -149,7 +167,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -157,7 +176,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -165,7 +185,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -173,7 +194,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -181,7 +203,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -189,7 +212,8 @@
     "chip": "M2",
     "memory": "128",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -197,7 +221,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -205,7 +230,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -213,7 +239,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -221,7 +248,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -229,7 +257,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -237,7 +266,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -245,7 +275,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -253,7 +284,8 @@
     "chip": "M2",
     "memory": "256",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2024"
   },
   {
     "kind": "air",
@@ -261,7 +293,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -269,7 +302,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -277,7 +311,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -285,7 +320,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -293,7 +329,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -301,7 +338,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -309,7 +347,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -317,7 +356,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -325,7 +365,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -333,7 +374,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -341,7 +383,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -349,7 +392,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -357,7 +401,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -365,7 +410,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -373,7 +419,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -381,7 +428,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -389,7 +437,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -397,7 +446,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -405,7 +455,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -413,7 +464,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -421,7 +473,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -429,7 +482,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -437,7 +491,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -445,7 +500,8 @@
     "chip": "M3",
     "memory": "128",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -453,7 +509,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -461,7 +518,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -469,7 +527,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -477,7 +536,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -485,7 +545,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -493,7 +554,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -501,7 +563,8 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": "2025"
   },
   {
     "kind": "air",
@@ -509,7 +572,296 @@
     "chip": "M3",
     "memory": "256",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": "2025"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "Wi-Fi",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "128",
+    "conn": "LTE",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "Wi-Fi",
+    "color": "Starlight",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Gray",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Blue",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Purple",
+    "year": "2026"
+  },
+  {
+    "kind": "air",
+    "inch": "13",
+    "chip": "M4",
+    "memory": "256",
+    "conn": "LTE",
+    "color": "Starlight",
+    "year": "2026"
   },
   {
     "kind": "pro",
@@ -517,7 +869,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -525,7 +878,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -533,7 +887,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -541,7 +896,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -549,7 +905,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -557,7 +914,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -565,7 +923,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -573,7 +932,26 @@
     "chip": "M4",
     "memory": "512",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "1024",
+    "conn": "Wi-Fi",
+    "color": "Black",
+    "year": "2024"
+  },
+  {
+    "kind": "pro",
+    "inch": "11",
+    "chip": "M4",
+    "memory": "1024",
+    "conn": "Wi-Fi",
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -581,7 +959,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -589,7 +968,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -597,7 +977,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -605,7 +986,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -613,7 +995,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -621,7 +1004,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -629,7 +1013,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -637,7 +1022,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -645,7 +1031,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -653,7 +1040,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -661,7 +1049,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -669,7 +1058,8 @@
     "chip": "M4",
     "memory": "256",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -677,7 +1067,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -685,7 +1076,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -693,7 +1085,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -701,7 +1094,8 @@
     "chip": "M4",
     "memory": "512",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2024"
   },
   {
     "kind": "pro",
@@ -709,7 +1103,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -717,7 +1112,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -725,7 +1121,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -733,7 +1130,8 @@
     "chip": "M5",
     "memory": "256",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -741,7 +1139,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -749,7 +1148,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -757,7 +1157,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "LTE",
-    "color": "Black"
+    "color": "Black",
+    "year": "2025"
   },
   {
     "kind": "pro",
@@ -765,7 +1166,8 @@
     "chip": "M5",
     "memory": "512",
     "conn": "LTE",
-    "color": "Silver"
+    "color": "Silver",
+    "year": "2025"
   },
   {
     "kind": "mini",
@@ -773,7 +1175,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -781,7 +1184,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -789,7 +1193,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -797,7 +1202,8 @@
     "chip": "",
     "memory": "128",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -805,7 +1211,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -813,7 +1220,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -821,7 +1229,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -829,7 +1238,8 @@
     "chip": "",
     "memory": "128",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -837,7 +1247,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -845,7 +1256,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -853,7 +1265,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -861,7 +1274,8 @@
     "chip": "",
     "memory": "256",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -869,7 +1283,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -877,7 +1292,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -885,7 +1301,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -893,7 +1310,8 @@
     "chip": "",
     "memory": "256",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -901,7 +1319,8 @@
     "chip": "",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -909,7 +1328,8 @@
     "chip": "",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -917,7 +1337,8 @@
     "chip": "",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -925,7 +1346,8 @@
     "chip": "",
     "memory": "512",
     "conn": "Wi-Fi",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -933,7 +1355,8 @@
     "chip": "",
     "memory": "512",
     "conn": "LTE",
-    "color": "Gray"
+    "color": "Gray",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -941,7 +1364,8 @@
     "chip": "",
     "memory": "512",
     "conn": "LTE",
-    "color": "Blue"
+    "color": "Blue",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -949,7 +1373,8 @@
     "chip": "",
     "memory": "512",
     "conn": "LTE",
-    "color": "Purple"
+    "color": "Purple",
+    "year": ""
   },
   {
     "kind": "mini",
@@ -957,6 +1382,7 @@
     "chip": "",
     "memory": "512",
     "conn": "LTE",
-    "color": "Starlight"
+    "color": "Starlight",
+    "year": ""
   }
 ]

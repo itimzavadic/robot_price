@@ -14,7 +14,13 @@ from airpods_processor import (
     merge_airpods_from_texts,
     process_airpods_from_text,
 )
-from ipad_processor import IpadKey, load_ipad_base, merge_ipad_from_texts, process_ipad_from_text
+from ipad_processor import (
+    IpadKey,
+    _format_ipad_line,
+    load_ipad_base,
+    merge_ipad_from_texts,
+    process_ipad_from_text,
+)
 from macbook_processor import (
     MacbookKey,
     load_macbook_base,
@@ -151,7 +157,15 @@ class MacbookTabRequest(_CategoryTabBase):
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    """Проверка живости; `ipad_retail_label_sample` — пример строки розницы iPad (без года в тексте)."""
+    out: dict[str, str] = {"status": "ok"}
+    for k in IPAD_ORDER:
+        if k.kind == "base11":
+            out["ipad_retail_label_sample"] = _format_ipad_line(
+                k, price_byn=None, missing_price_text="…"
+            )
+            break
+    return out
 
 
 @app.get("/")
