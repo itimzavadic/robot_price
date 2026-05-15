@@ -179,6 +179,8 @@ def _resolve_ipad_key(
 
 
 def _parse_ipad_name(name_raw: str, ipad_map: dict[IpadKey, dict]) -> Optional[IpadKey]:
+    if re.search(r"тонкая|thin\b", name_raw, flags=re.IGNORECASE):
+        return None
     s = _strip_noise(name_raw)
     if not s:
         return None
