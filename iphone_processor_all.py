@@ -547,16 +547,8 @@ def collect_iphone_all_best_byn_from_text(
         if include_cn_us_13_16:
             if not blocked:
                 if is_dual_or_hk:
-                    kd = DeviceKey(
-                        family="iphone",
-                        year=ik.year,
-                        variant=ik.variant,
-                        memory=ik.memory,
-                        color=ik.color,
-                        sim_variant="dual",
-                    )
-                    _update_best_price(best_numeric, has_numeric, kd, price_byn)
-                elif has_esim:
+                    continue
+                if has_esim:
                     ke = DeviceKey(
                         family="iphone",
                         year=ik.year,
@@ -578,16 +570,8 @@ def collect_iphone_all_best_byn_from_text(
                     _update_best_price(best_numeric, has_numeric, k11, price_byn)
             else:
                 if is_dual_or_hk:
-                    kd = DeviceKey(
-                        family="iphone",
-                        year=ik.year,
-                        variant=ik.variant,
-                        memory=ik.memory,
-                        color=ik.color,
-                        sim_variant="dual",
-                    )
-                    _update_best_price(best_numeric, has_numeric, kd, price_byn)
-                elif has_esim:
+                    continue
+                if has_esim:
                     ke = DeviceKey(
                         family="iphone",
                         year=ik.year,
