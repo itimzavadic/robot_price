@@ -499,6 +499,10 @@ def collect_iphone_all_best_byn_from_text(
         if base_proc.wholesale_line_skips_all_iphone_row_processing(name_raw):
             continue
 
+        # Пропускаем распакованные / обменные устройства
+        if re.search(r"распак|обменка", row_ctx, flags=re.IGNORECASE):
+            continue
+
         price_usd = base_proc._try_parse_price_usd(price_raw)
         if price_usd is None:
             continue
