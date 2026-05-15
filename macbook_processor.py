@@ -24,7 +24,7 @@ _TRAIL_SKU = re.compile(
 )
 # MW0W3, MRYM3, MC6T4 — одна цифра в середине/конце
 _TRAIL_APPLE_CONFIG = re.compile(r"\s+([A-Z][A-Z0-9]{3,})\s*$", re.IGNORECASE)
-_RE_APPLE_SKU = re.compile(r"^[A-Z]{1,4}\d[A-Z0-9]{2,}$", re.IGNORECASE)
+_RE_APPLE_SKU = re.compile(r"^[A-Z]{2,}\d+[A-Z0-9]*$", re.IGNORECASE)
 
 _RE_SEC_AIR_PRO = re.compile(
     r"^(?:MacBook\s+)?(Air|Pro)\s+(\d{2})[\"”″]?\s+"
@@ -37,6 +37,11 @@ _RE_SEC_NEO = re.compile(
     r"^(?:MacBook\s+)?Neo\s+(?:(\d{4})\s+)?"
     r"(M\d+|A\d+)(\s*Pro)?\s+"
     r"(\d+)\s*/\s*(\d+|1[tT][bB])\s*:\s*$",
+    re.IGNORECASE,
+)
+# Macbook Neo 13 8/256 — без года и без чипа
+_RE_SEC_NEO_V2 = re.compile(
+    r"^(?:MacBook\s+)?Neo\s+\d{2}\s+(\d+)\s*/\s*(\d+|1[tT][bB])\s*:\s*$",
     re.IGNORECASE,
 )
 
@@ -152,6 +157,11 @@ def _parse_section_header(line: str) -> Optional[_SectionCtx]:
         chip = _chip_from_groups(chip_b, pro_s)
         spec = _build_spec(ra, st)
         return _SectionCtx(fam, inch, year, chip, spec)
+    m = _RE_SEC_NEO_V2.match(s)
+    if m:
+        ra, st = m.groups()
+        spec = _build_spec(ra, st)
+        return _SectionCtx("Neo", "", None, None, spec)
     m = _RE_SEC_NEO.match(s)
     if m:
         y, chip_b, pro_s, ra, st = m.groups()
@@ -195,7 +205,7 @@ def _candidates_for_section(all_keys: list[MacbookKey], sec: _SectionCtx) -> lis
                 continue
             if sec.year is not None and k.year != sec.year:
                 continue
-        if k.chip != sec.chip:
+        if sec.chip is not None and k.chip != sec.chip:
             continue
         if k.spec != sec.spec:
             continue

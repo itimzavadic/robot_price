@@ -46,5 +46,18 @@
   {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "16/512", "color": "Silver", "retail_core": "MacBook Air 13\" 2025 M4 16/512 Silver"},
   {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "16/512", "color": "Midnight", "retail_core": "MacBook Air 13\" 2025 M4 16/512 Midnight"},
   {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "16/512", "color": "Sky Blue", "retail_core": "MacBook Air 13\" 2025 M4 16/512 Sky Blue"},
-  {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "16/512", "color": "Starlight", "retail_core": "MacBook Air 13\" 2025 M4 16/512 Starlight"}
+  {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "16/512", "color": "Starlight", "retail_core": "MacBook Air 13\" 2025 M4 16/512 Starlight"},
+  {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "24/512", "color": "Starlight", "retail_core": "MacBook Air 13\" 2025 M4 24/512 Starlight"},
+  {"family": "Air", "inch": "13", "year": 2025, "chip": "M4", "spec": "24/512", "color": "Sky Blue", "retail_core": "MacBook Air 13\" 2025 M4 24/512 Sky Blue"},
+  {"family": "Air", "inch": "13", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Midnight", "retail_core": "MacBook Air 13\" 2026 M5 24/1TB Midnight"},
+  {"family": "Air", "inch": "13", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Starlight", "retail_core": "MacBook Air 13\" 2026 M5 24/1TB Starlight"},
+  {"family": "Air", "inch": "13", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Sky Blue", "retail_core": "MacBook Air 13\" 2026 M5 24/1TB Sky Blue"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "16/1TB", "color": "Silver", "retail_core": "MacBook Air 15\" 2026 M5 16/1TB Silver"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "16/1TB", "color": "Midnight", "retail_core": "MacBook Air 15\" 2026 M5 16/1TB Midnight"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "16/1TB", "color": "Starlight", "retail_core": "MacBook Air 15\" 2026 M5 16/1TB Starlight"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "16/1TB", "color": "Sky Blue", "retail_core": "MacBook Air 15\" 2026 M5 16/1TB Sky Blue"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Silver", "retail_core": "MacBook Air 15\" 2026 M5 24/1TB Silver"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Midnight", "retail_core": "MacBook Air 15\" 2026 M5 24/1TB Midnight"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Starlight", "retail_core": "MacBook Air 15\" 2026 M5 24/1TB Starlight"},
+  {"family": "Air", "inch": "15", "year": 2026, "chip": "M5", "spec": "24/1TB", "color": "Sky Blue", "retail_core": "MacBook Air 15\" 2026 M5 24/1TB Sky Blue"}
 ]
