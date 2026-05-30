@@ -396,6 +396,8 @@ def _extract_iphone17_key(name_raw: str) -> Optional[DeviceKey]:
         sim_variant = "1+1"
     elif re.search(r"sim\s*\+\s*e", lowered) or re.search(r"sim\s*\+\s*e-?sim", lowered) or "sim+esim" in lowered.replace(" ", ""):
         sim_variant = "1+1"
+    elif re.search(r"e-?sim\s*\+\s*sim", lowered) or "esim+sim" in lowered.replace(" ", ""):
+        sim_variant = "1+1"
     elif re.search(r"e-?sim", lowered) or "esim" in lowered:
         sim_variant = "eSim"
     elif re.search(r"\bdual\b", lowered):
