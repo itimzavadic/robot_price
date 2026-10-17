@@ -17,14 +17,17 @@ WATCH_ICON = "⌚️"
 
 # Порядок важен: более длинные серии раньше.
 _SERIES_PATTERN = re.compile(
-    r"^(Ultra 3 2025|Ultra 2 2024|SE 3 2025|SE 2|SE 2023|S11|S10)\s+",
+    r"^(Ultra 3 2025|Ultra 2 2024|SE 3 2025|SE 2|SE 2023|S12|S11|S10)\s+",
     re.IGNORECASE,
 )
 
+# Ремешок/размер браслета в хвосте; в ключ базы не входит — в рознице берём min BYN.
 _STRAP_SPLIT = re.compile(
-    r"\s+(?:Nike Sport Loop|Milanese Loop|Sport Loop|Loop|SB|TL|AL|OB|M/L|S/M)\b",
+    r"\s+(?:Nike Sport Loop|Milanese Loop|Sport Loop|Loop|SB|TL|AL|OB|"
+    r"\(\s*M\s*/\s*L\s*\)|\(\s*S\s*/\s*M\s*\)|M/L|S/M)\b",
     re.IGNORECASE,
 )
+_STRAP_PAREN = re.compile(r"\s*\(\s*(?:S\s*/\s*M|M\s*/\s*L)\s*\)\s*$", re.IGNORECASE)
 
 # Артикулы вроде MEH94, MX4R3 (есть цифры); не трогаем слова цветов вроде Midnight.
 _TRAILING_SKU = re.compile(
@@ -50,6 +53,7 @@ def _series_canon(raw: str) -> str:
         "ultra 2 2024": "Ultra 2 2024",
         "se 3 2025": "SE 3 2025",
         "se 2": "SE 2",
+        "s12": "S12",
         "s11": "S11",
         "s10": "S10",
     }
@@ -83,6 +87,7 @@ def _strip_trailing_flags_and_skus(s: str) -> str:
 
 
 def _strip_strap_suffix(s: str) -> str:
+    s = _STRAP_PAREN.sub("", s).strip()
     m = _STRAP_SPLIT.search(s)
     if m:
         s = s[: m.start()]

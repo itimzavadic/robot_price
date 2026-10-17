@@ -27,6 +27,15 @@
   {"series": "S11", "size": "46", "color": "Silver"},
   {"series": "S11", "size": "46", "color": "Rose Gold"},
 
+  {"series": "S12", "size": "42", "color": "Dark Bronze"},
+  {"series": "S12", "size": "42", "color": "Light Gold"},
+  {"series": "S12", "size": "42", "color": "Black"},
+  {"series": "S12", "size": "42", "color": "Space Gray"},
+  {"series": "S12", "size": "46", "color": "Dark Bronze"},
+  {"series": "S12", "size": "46", "color": "Light Gold"},
+  {"series": "S12", "size": "46", "color": "Black"},
+  {"series": "S12", "size": "46", "color": "Space Gray"},
+
   {"series": "Ultra 2 2024", "size": "", "color": "Natural Titanium"},
   {"series": "Ultra 2 2024", "size": "", "color": "Black Titanium"},
 

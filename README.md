@@ -1,6 +1,6 @@
 # Процессор розничных цен Apple
 
-Веб-сервис на **FastAPI**: из сырого оптового прайса (текст или CSV) формирует розничный прайс в **CSV** по базам из `data/`. Поддерживаются **iPhone** (включая объединённые базы 13–16, Air, 17), **Apple Watch**, **iPad**, **AirPods**, **MacBook**, а также **смешанный** опт по категориям.
+Веб-сервис на **FastAPI**: из сырого оптового прайса (текст или CSV) формирует розничный прайс в **CSV** по базам из `data/`. Поддерживаются **iPhone** (13–16, Air, 17, **18 Pro / Pro Max**), **Apple Watch**, **iPad**, **AirPods**, **MacBook**.
 
 ## Стек
 
@@ -33,6 +33,8 @@ uvicorn fastapi_app:app --reload --host 127.0.0.1 --port 8000
 - Swagger: http://127.0.0.1:8000/docs
 - Проверка живости: `GET /health`
 
+В UI одно общее поле **курса USD → BYN** для всех вкладок с наценкой. Вкладка **«Необработанные»** заполняется при обработке iPhone (строки без сопоставления с базой, без цены / «нету», «Актив»; Dual и CN/US туда не попадают).
+
 ## API (кратко)
 
 | Метод | Путь | Описание |
@@ -40,16 +42,15 @@ uvicorn fastapi_app:app --reload --host 127.0.0.1 --port 8000
 | GET | `/` | HTML-форма |
 | GET | `/docs` | OpenAPI (Swagger UI) |
 | GET | `/health` | `{"status": "ok"}` |
-| POST | `/process/iphone-all` | iPhone по полной базе → CSV |
-| POST | `/process/iphone` | iPhone, опционально merge двух прайсов |
-| POST | `/process/watch` | Watch |
-| POST | `/process/ipad` | iPad |
-| POST | `/process/airpods` | AirPods |
-| POST | `/process/macbook` | MacBook |
-| POST | `/process/mixed` | Смешанный прайс, свои наценки USD по категориям |
+| POST | `/process/iphone-all` | iPhone по полной базе → JSON `{csv, rejected}` |
+| POST | `/process/iphone` | iPhone, опционально merge двух прайсов → JSON `{csv, rejected}` |
+| POST | `/process/watch` | Watch → CSV |
+| POST | `/process/ipad` | iPad → CSV |
+| POST | `/process/airpods` | AirPods → CSV |
+| POST | `/process/macbook` | MacBook → CSV |
 | POST | `/process/iphone-17-site` | Розница iPhone 17 + Air (BYN без пересчёта): min BYN на «память + цвет» внутри линейки, в названии без SIM |
 
-Ответы обработки — **CSV** с заголовком `Content-Disposition` для скачивания файла.
+Ответы Watch/iPad/AirPods/MacBook и сайт-вкладки — **CSV** с `Content-Disposition`. Ответы iPhone — **JSON** `{ "csv": "...", "rejected": ["...", ...] }`.
 
 ## Деплой на VPS (пример: systemd)
 

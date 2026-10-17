@@ -1,0 +1,514 @@
+[
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "256",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "512",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "1TB",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro",
+    "memory": "2TB",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "256",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "512",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "1TB",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Black",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Black",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Glacier",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Glacier",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Silver",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Silver",
+    "sim_variant": "1+1"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Burgundy",
+    "sim_variant": "eSim"
+  },
+  {
+    "family": "iphone",
+    "year": 18,
+    "variant": "Pro Max",
+    "memory": "2TB",
+    "color": "Burgundy",
+    "sim_variant": "1+1"
+  }
+]

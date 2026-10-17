@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel, Field, model_validator
 
 from airpods_processor import (
@@ -34,7 +34,6 @@ from iphone_processor_all import (
     process_iphone17_site_from_text,
     process_iphone_all_from_text,
 )
-from mixed_processor import process_mixed_retail_from_text
 from watch_processor import WatchKey, load_watch_base, merge_watch_from_texts, process_watch_from_text
 
 
@@ -61,6 +60,7 @@ def _startup() -> None:
         base_13_16_path=Path(__file__).parent / "data" / "apple_iphone_13_16_base.json",
         base_air_path=Path(__file__).parent / "data" / "apple_iphone_air_base.json",
         base_17_path=Path(__file__).parent / "data" / "apple_iphone_17_base.json",
+        base_18_path=Path(__file__).parent / "data" / "apple_iphone_18_base.json",
     )
     WATCH_ORDER, WATCH_BASE = load_watch_base(Path(__file__).parent / "data" / "apple_watch_base.json")
     IPAD_ORDER, IPAD_BASE = load_ipad_base(Path(__file__).parent / "data" / "apple_ipad_base.json")
@@ -91,23 +91,6 @@ class Iphone17SiteRequest(BaseModel):
     )
     input_format: Literal["auto", "text", "csv"] = "auto"
     delimiter_out: str = ";"
-
-
-class MixedRetailRequest(BaseModel):
-    """Смешанный опт: iPhone, Watch, iPad, AirPods — своя наценка USD на категорию."""
-    raw: str
-    input_format: Literal["auto", "text", "csv"] = "auto"
-    usd_to_byn: Decimal
-    markup_usd_iphone: Decimal
-    markup_usd_watch: Decimal
-    markup_usd_ipad: Decimal
-    markup_usd_airpods: Decimal
-    markup_usd_macbook: Decimal = Field(
-        default=Decimal("110"), description="Наценка MacBook, USD (для смешанного прайса)."
-    )
-    missing_price_text: str = "по запросу"
-    delimiter_out: str = ";"
-    include_cn_us_13_16: bool = False
 
 
 class _CategoryTabBase(BaseModel):
@@ -189,9 +172,9 @@ def process_iphone_17_site(req: Iphone17SiteRequest) -> Response:
     )
 
 
-@app.post("/process/iphone-all", response_class=Response)
-def process_iphone_all(req: IphoneAllRequest) -> Response:
-    csv_text = process_iphone_all_from_text(
+@app.post("/process/iphone-all")
+def process_iphone_all(req: IphoneAllRequest) -> JSONResponse:
+    csv_text, rejected = process_iphone_all_from_text(
         req.raw,
         input_format=req.input_format,
         base_order=BASE_ORDER,
@@ -202,15 +185,10 @@ def process_iphone_all(req: IphoneAllRequest) -> Response:
         delimiter_out=req.delimiter_out,
         include_cn_us_13_16=req.include_cn_us_13_16,
     )
-
-    return Response(
-        content=csv_text,
-        media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": 'attachment; filename="iphone_all.csv"'},
-    )
+    return JSONResponse(content={"csv": csv_text, "rejected": rejected})
 
 
-def _iphone_tab_csv(req: IphoneTabRequest) -> str:
+def _iphone_tab_result(req: IphoneTabRequest) -> tuple[str, list[str]]:
     if req.merge:
         return merge_iphone_all_from_texts(
             req.raw,
@@ -238,15 +216,10 @@ def _iphone_tab_csv(req: IphoneTabRequest) -> str:
     )
 
 
-@app.post("/process/iphone", response_class=Response)
-def process_iphone_tab(req: IphoneTabRequest) -> Response:
-    csv_text = _iphone_tab_csv(req)
-    name = "iphone_merged.csv" if req.merge else "iphone_retail.csv"
-    return Response(
-        content=csv_text,
-        media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": f'attachment; filename="{name}"'},
-    )
+@app.post("/process/iphone")
+def process_iphone_tab(req: IphoneTabRequest) -> JSONResponse:
+    csv_text, rejected = _iphone_tab_result(req)
+    return JSONResponse(content={"csv": csv_text, "rejected": rejected})
 
 
 @app.post("/process/watch", response_class=Response)
@@ -383,36 +356,3 @@ def process_macbook_tab(req: MacbookTabRequest) -> Response:
         media_type="text/csv; charset=utf-8",
         headers={"Content-Disposition": f'attachment; filename="{name}"'},
     )
-
-
-@app.post("/process/mixed", response_class=Response)
-def process_mixed(req: MixedRetailRequest) -> Response:
-    csv_text = process_mixed_retail_from_text(
-        req.raw,
-        input_format=req.input_format,
-        base_iphone_order=BASE_ORDER,
-        base_iphone=BASE,
-        watch_order=WATCH_ORDER,
-        watch_map=WATCH_BASE,
-        ipad_order=IPAD_ORDER,
-        ipad_map=IPAD_BASE,
-        airpods_order=AIRPODS_ORDER,
-        airpods_map=AIRPODS_BASE,
-        macbook_order=MACBOOK_ORDER,
-        macbook_map=MACBOOK_BASE,
-        usd_to_byn=req.usd_to_byn,
-        markup_usd_iphone=req.markup_usd_iphone,
-        markup_usd_watch=req.markup_usd_watch,
-        markup_usd_ipad=req.markup_usd_ipad,
-        markup_usd_airpods=req.markup_usd_airpods,
-        markup_usd_macbook=req.markup_usd_macbook,
-        missing_price_text=req.missing_price_text,
-        delimiter_out=req.delimiter_out,
-        include_cn_us_13_16=req.include_cn_us_13_16,
-    )
-    return Response(
-        content=csv_text,
-        media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": 'attachment; filename="retail_mixed.csv"'},
-    )
-

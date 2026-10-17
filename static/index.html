@@ -8,7 +8,11 @@
     :root {
       font-family: system-ui, sans-serif;
       line-height: 1.45;
-      --sidebar-w: 15.5rem;
+      --toolbar-left-w: 8rem;
+      --tabs-w: 7.25rem;
+      --toolbar-gap: 1rem;
+      /* правый край сайдбара = правый край кнопок техники */
+      --sidebar-w: calc(var(--toolbar-left-w) + var(--toolbar-gap) + var(--tabs-w));
       --col-w: minmax(17rem, 20rem);
       --textarea-min-h: 62vh;
       --textarea-merge-b-h: 28vh;
@@ -20,57 +24,109 @@
       color: #1a1a1a;
       min-height: 100vh;
     }
+
     .page-title {
       font-size: 1.05rem;
       font-weight: 600;
       margin: 0 0 0.65rem;
       line-height: 1.3;
     }
-    .tabs-row {
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--toolbar-left-w) var(--tabs-w) var(--col-w) var(--col-w);
+      grid-template-rows: auto 1fr;
+      column-gap: var(--toolbar-gap);
+      row-gap: 0.65rem;
+      align-items: start;
+      max-width: fit-content;
+      min-height: calc(100vh - 4.5rem);
+    }
+    .toolbar-left {
+      grid-column: 1;
+      grid-row: 1;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.15rem 0.35rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px solid #ccc;
+      flex-direction: column;
+      gap: 0.45rem;
+      width: var(--toolbar-left-w);
+    }
+    .toolbar-left .field { margin: 0; width: 100%; }
+    .toolbar-left .field label { margin-bottom: 0.2rem; font-size: 0.75rem; }
+    .toolbar-left .field input {
+      padding: 0.35rem 0.4rem;
+      font-size: 0.8125rem;
+    }
+    .toolbar-left .btn-opt-b {
+      width: 100%;
+      padding: 0.32rem 0.4rem;
+      font-size: 0.72rem;
+      line-height: 1.2;
+      border-radius: 6px;
+    }
+    .toolbar-left .btn-opt-b.active-opt {
+      background: #222;
+      color: #fff;
+      border-color: #222;
+    }
+    .toolbar-left.hidden-controls { visibility: hidden; pointer-events: none; }
+    .tabs-row {
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.25rem;
+      width: var(--tabs-w);
+      align-self: start;
     }
     .tab-btn {
-      padding: 0.45rem 0.75rem;
-      font-size: 0.8125rem;
-      border: 1px solid transparent;
-      border-radius: 6px 6px 0 0;
+      padding: 0.32rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       background: #f0f0f0;
       color: #444;
       cursor: pointer;
+      width: 100%;
+      white-space: nowrap;
+      text-align: left;
     }
     .tab-btn:hover { background: #e4e4e4; color: #111; }
     .tab-btn.active {
       font-weight: 600;
-      background: #fff;
-      color: #111;
-      border-color: #ccc;
-      border-bottom-color: #fff;
-      margin-bottom: -1px;
-      position: relative;
-      z-index: 1;
+      background: #222;
+      color: #fff;
+      border-color: #222;
     }
     .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    .tab-panel.active { display: contents; }
+    .tab-panel.active > .layout { display: contents; }
     label { display: block; font-size: 0.8125rem; font-weight: 500; margin: 0 0 0.3rem; }
-    .layout {
-      display: grid;
-      grid-template-columns: var(--sidebar-w) var(--col-w) var(--col-w);
-      gap: 1rem 1.25rem;
-      align-items: stretch;
-      max-width: fit-content;
-      margin: 0 auto;
-      min-height: calc(100vh - 5rem);
-    }
     .sidebar {
+      /* под колонкой кнопок техники, на всю ширину «курс + вкладки» */
+      grid-column: 1 / 3;
+      grid-row: 2;
       display: flex;
       flex-direction: column;
       gap: 0;
       min-width: 0;
+      width: var(--sidebar-w);
+      max-width: var(--sidebar-w);
+      align-self: start;
+    }
+    .col-in {
+      grid-column: 3;
+      grid-row: 1 / -1;
+      align-self: stretch;
+      margin-left: 0.35rem;
+    }
+    .col-out {
+      grid-column: 4;
+      grid-row: 1 / -1;
+      align-self: stretch;
+    }
+    #panel-unprocessed .col-in {
+      grid-column: 3 / 5;
     }
     .sidebar .field { margin-bottom: 0.85rem; }
     .merge-toggle {
@@ -94,7 +150,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
-      margin-top: 0.25rem;
+      margin: 0 0 0.75rem;
     }
     button {
       padding: 0.5rem 0.75rem;
@@ -156,13 +212,30 @@
       border-radius: 6px;
       resize: vertical;
     }
+    .wrap-raw-b:not([hidden]) {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      flex: 1 1 0;
+    }
+    .wrap-raw-b[hidden] {
+      display: none !important;
+    }
     .wrap-raw-b .raw-field-head {
       margin-bottom: 0.2rem;
     }
     textarea.col-textarea.raw-b {
-      min-height: var(--textarea-merge-b-h);
       margin-top: 0.2rem;
-      flex: 0 1 auto;
+    }
+    /* Опт A и Опт B — одинаковая высота */
+    .col-in:has(.wrap-raw-b:not([hidden])) > textarea.col-textarea {
+      flex: 1 1 0;
+      min-height: 0;
+    }
+    .col-in:has(.wrap-raw-b:not([hidden])) .wrap-raw-b textarea.col-textarea.raw-b {
+      flex: 1 1 0;
+      min-height: 0;
+      height: 100%;
     }
     .out-area { background: #f8f9fa; }
     .filters-panel {
@@ -200,50 +273,73 @@
       line-height: 1.35;
     }
     @media (max-width: 960px) {
-      .layout {
+      .app-shell {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         max-width: 36rem;
       }
+      .toolbar-left,
+      .tabs-row,
+      .sidebar,
+      .col-in,
+      .col-out,
+      #panel-unprocessed .col-in {
+        grid-column: 1;
+        grid-row: auto;
+        width: 100%;
+      }
       :root { --textarea-min-h: 36vh; --textarea-merge-b-h: 22vh; }
-      .sidebar { order: 0; }
-      .col-in { order: 1; }
-      .col-out { order: 2; }
     }
   </style>
 </head>
 <body>
   <h1 class="page-title">Опт → розница</h1>
 
-  <nav class="tabs-row" aria-label="Тип прайса">
-    <button type="button" class="tab-btn active" data-tab="iphone">iPhone</button>
-    <button type="button" class="tab-btn" data-tab="watch">Apple Watch</button>
-    <button type="button" class="tab-btn" data-tab="ipad">iPad</button>
-    <button type="button" class="tab-btn" data-tab="airpods">AirPods</button>
-    <button type="button" class="tab-btn" data-tab="macbook">MacBook</button>
-    <button type="button" class="tab-btn" data-tab="mixed">Смешанный прайс</button>
-    <button type="button" class="tab-btn" data-tab="iphone17site">Сайт: 17 + Air</button>
-  </nav>
+  <div class="app-shell">
+    <div class="toolbar-left" id="toolbar-controls">
+      <div class="field">
+        <label for="usd-global">Курс USD → BYN</label>
+        <input id="usd-global" type="number" step="0.01" min="0" value="3" />
+      </div>
+      <div class="field">
+        <label for="markup-global" id="lbl-markup-global">Наценка, USD</label>
+        <input id="markup-global" type="number" step="1" min="0" value="100" />
+      </div>
+      <button type="button" class="secondary btn-opt-b" id="btn-opt-b">+ Опт B</button>
+      <div class="field" id="wrap-markup-b-global" hidden>
+        <label for="markup-b-global">Наценка B, USD</label>
+        <input id="markup-b-global" type="number" step="1" min="0" value="90" />
+      </div>
+    </div>
+    <nav class="tabs-row" aria-label="Тип прайса">
+      <button type="button" class="tab-btn active" data-tab="iphone">iPhone</button>
+      <button type="button" class="tab-btn" data-tab="watch" title="Apple Watch">Watch</button>
+      <button type="button" class="tab-btn" data-tab="ipad">iPad</button>
+      <button type="button" class="tab-btn" data-tab="airpods">AirPods</button>
+      <button type="button" class="tab-btn" data-tab="macbook">MacBook</button>
+      <button type="button" class="tab-btn" data-tab="unprocessed" title="Необработанные">Отсев</button>
+      <button type="button" class="tab-btn" data-tab="iphone17site" title="Сайт: 17 + Air">Сайт 17</button>
+    </nav>
 
   <!-- iPhone -->
   <div id="panel-iphone" class="tab-panel active" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-iphone">Курс USD → BYN</label>
-          <input id="usd-iphone" type="number" step="0.01" min="0" value="3" />
+        <input type="checkbox" id="merge-iphone" hidden />
+        <input type="hidden" id="markup-iphone" value="" />
+        <input type="hidden" id="markup-b-iphone" value="" />
+        <div class="actions">
+          <button type="button" id="btn-iphone">Обработать</button>
+          <span id="status-iphone" class="status"></span>
         </div>
+        <div id="err-iphone" class="err" hidden></div>
         <div class="field">
-          <label for="markup-iphone" id="lbl-markup-a-iphone">Наценка, USD</label>
-          <input id="markup-iphone" type="number" step="1" min="0" value="100" />
-        </div>
-        <label class="merge-toggle">
-          <input type="checkbox" id="merge-iphone" />
-          <span>Объединить два опта (min BYN по позиции)</span>
-        </label>
-        <p class="merge-hint" id="merge-hint-iphone" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
-        <div class="field" id="wrap-markup-b-iphone" hidden>
-          <label for="markup-b-iphone">Наценка прайса B, USD</label>
-          <input id="markup-b-iphone" type="number" step="1" min="0" value="90" />
+          <label for="fmt-iphone">Формат входа</label>
+          <select id="fmt-iphone">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
         </div>
         <div class="filters-panel" aria-label="Фильтры">
           <h2>Фильтры</h2>
@@ -257,20 +353,6 @@
           </label>
           <p class="filter-hint" id="filterStats-iphone" hidden></p>
         </div>
-        <div class="field">
-          <label for="fmt-iphone">Формат входа</label>
-          <select id="fmt-iphone">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
-        <div class="actions">
-          <button type="button" id="btn-iphone">Обработать</button>
-          <button type="button" id="btnDl-iphone" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-iphone" class="status"></span>
-        </div>
-        <div id="err-iphone" class="err" hidden></div>
       </aside>
       <section class="col col-in">
         <div class="raw-field-head">
@@ -297,22 +379,21 @@
   <div id="panel-watch" class="tab-panel" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-watch">Курс USD → BYN</label>
-          <input id="usd-watch" type="number" step="0.01" min="0" value="3" />
+        <input type="checkbox" id="merge-watch" hidden />
+        <input type="hidden" id="markup-watch" value="" />
+        <input type="hidden" id="markup-b-watch" value="" />
+        <div class="actions">
+          <button type="button" id="btn-watch">Обработать</button>
+          <span id="status-watch" class="status"></span>
         </div>
+        <div id="err-watch" class="err" hidden></div>
         <div class="field">
-          <label for="markup-watch" id="lbl-markup-a-watch">Наценка, USD</label>
-          <input id="markup-watch" type="number" step="1" min="0" value="95" />
-        </div>
-        <label class="merge-toggle">
-          <input type="checkbox" id="merge-watch" />
-          <span>Объединить два опта (min BYN по позиции)</span>
-        </label>
-        <p class="merge-hint" id="merge-hint-watch" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
-        <div class="field" id="wrap-markup-b-watch" hidden>
-          <label for="markup-b-watch">Наценка прайса B, USD</label>
-          <input id="markup-b-watch" type="number" step="1" min="0" value="85" />
+          <label for="fmt-watch">Формат входа</label>
+          <select id="fmt-watch">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -322,20 +403,6 @@
           </label>
           <p class="filter-hint" id="filterStats-watch" hidden></p>
         </div>
-        <div class="field">
-          <label for="fmt-watch">Формат входа</label>
-          <select id="fmt-watch">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
-        <div class="actions">
-          <button type="button" id="btn-watch">Обработать</button>
-          <button type="button" id="btnDl-watch" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-watch" class="status"></span>
-        </div>
-        <div id="err-watch" class="err" hidden></div>
       </aside>
       <section class="col col-in">
         <div class="raw-field-head">
@@ -362,22 +429,21 @@
   <div id="panel-ipad" class="tab-panel" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-ipad">Курс USD → BYN</label>
-          <input id="usd-ipad" type="number" step="0.01" min="0" value="3" />
+        <input type="checkbox" id="merge-ipad" hidden />
+        <input type="hidden" id="markup-ipad" value="" />
+        <input type="hidden" id="markup-b-ipad" value="" />
+        <div class="actions">
+          <button type="button" id="btn-ipad">Обработать</button>
+          <span id="status-ipad" class="status"></span>
         </div>
+        <div id="err-ipad" class="err" hidden></div>
         <div class="field">
-          <label for="markup-ipad" id="lbl-markup-a-ipad">Наценка, USD</label>
-          <input id="markup-ipad" type="number" step="1" min="0" value="95" />
-        </div>
-        <label class="merge-toggle">
-          <input type="checkbox" id="merge-ipad" />
-          <span>Объединить два опта (min BYN по позиции)</span>
-        </label>
-        <p class="merge-hint" id="merge-hint-ipad" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
-        <div class="field" id="wrap-markup-b-ipad" hidden>
-          <label for="markup-b-ipad">Наценка прайса B, USD</label>
-          <input id="markup-b-ipad" type="number" step="1" min="0" value="85" />
+          <label for="fmt-ipad">Формат входа</label>
+          <select id="fmt-ipad">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -387,20 +453,6 @@
           </label>
           <p class="filter-hint" id="filterStats-ipad" hidden></p>
         </div>
-        <div class="field">
-          <label for="fmt-ipad">Формат входа</label>
-          <select id="fmt-ipad">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
-        <div class="actions">
-          <button type="button" id="btn-ipad">Обработать</button>
-          <button type="button" id="btnDl-ipad" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-ipad" class="status"></span>
-        </div>
-        <div id="err-ipad" class="err" hidden></div>
       </aside>
       <section class="col col-in">
         <div class="raw-field-head">
@@ -427,22 +479,21 @@
   <div id="panel-airpods" class="tab-panel" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-airpods">Курс USD → BYN</label>
-          <input id="usd-airpods" type="number" step="0.01" min="0" value="3" />
+        <input type="checkbox" id="merge-airpods" hidden />
+        <input type="hidden" id="markup-airpods" value="" />
+        <input type="hidden" id="markup-b-airpods" value="" />
+        <div class="actions">
+          <button type="button" id="btn-airpods">Обработать</button>
+          <span id="status-airpods" class="status"></span>
         </div>
+        <div id="err-airpods" class="err" hidden></div>
         <div class="field">
-          <label for="markup-airpods" id="lbl-markup-a-airpods">Наценка, USD</label>
-          <input id="markup-airpods" type="number" step="1" min="0" value="95" />
-        </div>
-        <label class="merge-toggle">
-          <input type="checkbox" id="merge-airpods" />
-          <span>Объединить два опта (min BYN по позиции)</span>
-        </label>
-        <p class="merge-hint" id="merge-hint-airpods" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
-        <div class="field" id="wrap-markup-b-airpods" hidden>
-          <label for="markup-b-airpods">Наценка прайса B, USD</label>
-          <input id="markup-b-airpods" type="number" step="1" min="0" value="85" />
+          <label for="fmt-airpods">Формат входа</label>
+          <select id="fmt-airpods">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -452,20 +503,6 @@
           </label>
           <p class="filter-hint" id="filterStats-airpods" hidden></p>
         </div>
-        <div class="field">
-          <label for="fmt-airpods">Формат входа</label>
-          <select id="fmt-airpods">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
-        <div class="actions">
-          <button type="button" id="btn-airpods">Обработать</button>
-          <button type="button" id="btnDl-airpods" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-airpods" class="status"></span>
-        </div>
-        <div id="err-airpods" class="err" hidden></div>
       </aside>
       <section class="col col-in">
         <div class="raw-field-head">
@@ -492,22 +529,21 @@
   <div id="panel-macbook" class="tab-panel" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-macbook">Курс USD → BYN</label>
-          <input id="usd-macbook" type="number" step="0.01" min="0" value="3" />
+        <input type="checkbox" id="merge-macbook" hidden />
+        <input type="hidden" id="markup-macbook" value="" />
+        <input type="hidden" id="markup-b-macbook" value="" />
+        <div class="actions">
+          <button type="button" id="btn-macbook">Обработать</button>
+          <span id="status-macbook" class="status"></span>
         </div>
+        <div id="err-macbook" class="err" hidden></div>
         <div class="field">
-          <label for="markup-macbook" id="lbl-markup-a-macbook">Наценка, USD</label>
-          <input id="markup-macbook" type="number" step="1" min="0" value="110" />
-        </div>
-        <label class="merge-toggle">
-          <input type="checkbox" id="merge-macbook" />
-          <span>Объединить два опта (min BYN по позиции)</span>
-        </label>
-        <p class="merge-hint" id="merge-hint-macbook" hidden>Два прайса с разными наценками: в рознице остаётся более низкая цена в BYN для каждой модели.</p>
-        <div class="field" id="wrap-markup-b-macbook" hidden>
-          <label for="markup-b-macbook">Наценка прайса B, USD</label>
-          <input id="markup-b-macbook" type="number" step="1" min="0" value="100" />
+          <label for="fmt-macbook">Формат входа</label>
+          <select id="fmt-macbook">
+            <option value="auto" selected>auto</option>
+            <option value="text">text</option>
+            <option value="csv">csv</option>
+          </select>
         </div>
         <div class="filters-panel">
           <h2>Фильтры</h2>
@@ -517,20 +553,6 @@
           </label>
           <p class="filter-hint" id="filterStats-macbook" hidden></p>
         </div>
-        <div class="field">
-          <label for="fmt-macbook">Формат входа</label>
-          <select id="fmt-macbook">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
-        <div class="actions">
-          <button type="button" id="btn-macbook">Обработать</button>
-          <button type="button" id="btnDl-macbook" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-macbook" class="status"></span>
-        </div>
-        <div id="err-macbook" class="err" hidden></div>
       </aside>
       <section class="col col-in">
         <div class="raw-field-head">
@@ -553,71 +575,25 @@
     </div>
   </div>
 
-  <!-- Mixed -->
-  <div id="panel-mixed" class="tab-panel" role="tabpanel">
+  <!-- Необработанные -->
+  <div id="panel-unprocessed" class="tab-panel" role="tabpanel">
     <div class="layout">
       <aside class="sidebar">
-        <div class="field">
-          <label for="usd-mixed">Курс USD → BYN</label>
-          <input id="usd-mixed" type="number" step="0.01" min="0" value="3" />
-        </div>
-        <div class="field">
-          <label for="markup-mixed-iphone">Наценка iPhone, USD</label>
-          <input id="markup-mixed-iphone" type="number" step="1" min="0" value="100" />
-        </div>
-        <div class="field">
-          <label for="markup-mixed-watch">Наценка Apple Watch, USD</label>
-          <input id="markup-mixed-watch" type="number" step="1" min="0" value="95" />
-        </div>
-        <div class="field">
-          <label for="markup-mixed-ipad">Наценка iPad, USD</label>
-          <input id="markup-mixed-ipad" type="number" step="1" min="0" value="95" />
-        </div>
-        <div class="field">
-          <label for="markup-mixed-airpods">Наценка AirPods, USD</label>
-          <input id="markup-mixed-airpods" type="number" step="1" min="0" value="95" />
-        </div>
-        <div class="field">
-          <label for="markup-mixed-macbook">Наценка MacBook, USD</label>
-          <input id="markup-mixed-macbook" type="number" step="1" min="0" value="110" />
-        </div>
-        <div class="filters-panel" aria-label="Фильтры">
-          <h2>Фильтры</h2>
-          <label class="filter-item">
-            <input type="checkbox" id="filterShowMissing-mixed">
-            <span>Показывать отсутствующие модели<br /><span class="filter-hint">(цена «по запросу»)</span></span>
-          </label>
-          <label class="filter-item">
-            <input type="checkbox" id="includeCnUs-mixed" />
-            <span>Доп. варианты SIM для 13–16 (CN/US)</span>
-          </label>
-          <p class="filter-hint" id="filterStats-mixed" hidden></p>
-        </div>
-        <div class="field">
-          <label for="fmt-mixed">Формат входа</label>
-          <select id="fmt-mixed">
-            <option value="auto" selected>auto</option>
-            <option value="text">text</option>
-            <option value="csv">csv</option>
-          </select>
-        </div>
+        <p class="filter-hint" style="margin:0 0 0.75rem;line-height:1.4;">
+          Сюда попадают строки опта, которые не удалось сопоставить с эталонной базой,
+          а также позиции без цены / «нету» и «Актив». Dual и CN/US сюда не попадают.
+          Сейчас список заполняется при обработке вкладки <strong>iPhone</strong>.
+        </p>
         <div class="actions">
-          <button type="button" id="btn-mixed">Обработать</button>
-          <button type="button" id="btnDl-mixed" class="secondary" disabled>Скачать CSV</button>
-          <span id="status-mixed" class="status"></span>
+          <button type="button" id="btnCopy-unprocessed" class="secondary" disabled>Копировать</button>
+          <button type="button" id="btnDl-unprocessed" class="secondary" disabled>Скачать TXT</button>
+          <span id="status-unprocessed" class="status"></span>
         </div>
-        <div id="err-mixed" class="err" hidden></div>
+        <div id="err-unprocessed" class="err" hidden></div>
       </aside>
       <section class="col col-in">
-        <div class="raw-field-head">
-          <label class="col-label" for="raw-mixed">Оптовый прайс</label>
-          <button type="button" class="btn-clear-raw" data-clear-raw="raw-mixed">Очистить</button>
-        </div>
-        <textarea id="raw-mixed" class="col-textarea" placeholder="📱 ⌚ ◾️ 🎧 💻 в одном тексте"></textarea>
-      </section>
-      <section class="col col-out">
-        <label class="col-label" for="out-mixed">Розничный прайс</label>
-        <textarea id="out-mixed" class="col-textarea out-area" readonly placeholder="Блоки по составу опта"></textarea>
+        <label class="col-label" for="out-unprocessed">Необработанные позиции</label>
+        <textarea id="out-unprocessed" class="col-textarea out-area" readonly placeholder="Появится после обработки вкладки iPhone"></textarea>
       </section>
     </div>
   </div>
@@ -658,6 +634,7 @@
       </section>
     </div>
   </div>
+  </div><!-- /.app-shell -->
 
   <script>
     const $ = (id) => document.getElementById(id);
@@ -671,6 +648,42 @@
     const MISSING_MARKER = "- **по запросу**";
 
     const CATEGORY_IDS = ["iphone", "watch", "ipad", "airpods", "macbook"];
+
+    const MARKUP_DEFAULTS = { iphone: 100, watch: 95, ipad: 95, airpods: 95, macbook: 110 };
+    const MARKUP_B_DEFAULTS = { iphone: 90, watch: 85, ipad: 85, airpods: 85, macbook: 100 };
+    let activeCategoryTab = "iphone";
+
+    function isCategoryTab(tabId) {
+      return CATEGORY_IDS.includes(tabId);
+    }
+
+    function saveToolbarToTab(tabId) {
+      if (!isCategoryTab(tabId)) return;
+      $(`markup-${tabId}`).value = $("markup-global").value;
+      $(`markup-b-${tabId}`).value = $("markup-b-global").value;
+      $(`merge-${tabId}`).checked = $("btn-opt-b").classList.contains("active-opt");
+    }
+
+    function loadToolbarFromTab(tabId) {
+      const controls = $("toolbar-controls");
+      if (!isCategoryTab(tabId)) {
+        controls.classList.add("hidden-controls");
+        return;
+      }
+      controls.classList.remove("hidden-controls");
+      activeCategoryTab = tabId;
+      let m = $(`markup-${tabId}`).value;
+      let mb = $(`markup-b-${tabId}`).value;
+      if (m === "" || m == null) m = String(MARKUP_DEFAULTS[tabId] ?? 100);
+      if (mb === "" || mb == null) mb = String(MARKUP_B_DEFAULTS[tabId] ?? 90);
+      $("markup-global").value = m;
+      $("markup-b-global").value = mb;
+      const on = $(`merge-${tabId}`).checked;
+      $("btn-opt-b").classList.toggle("active-opt", on);
+      $("btn-opt-b").textContent = on ? "Убрать Опт B" : "+ Опт B";
+      setMergeUi(tabId, on);
+    }
+
 
     function isDashSeparatorLine(line) {
       return /^-+$/.test(line.trim());
@@ -752,40 +765,49 @@
 
     function setMergeUi(tabId, on) {
       const wrapB = $(`wrap-raw-b-${tabId}`);
-      const wrapMb = $(`wrap-markup-b-${tabId}`);
-      const hint = $(`merge-hint-${tabId}`);
       const lblA = $(`lbl-raw-a-${tabId}`);
-      const lblMa = $(`lbl-markup-a-${tabId}`);
       if (wrapB) wrapB.hidden = !on;
-      if (wrapMb) wrapMb.hidden = !on;
-      if (hint) hint.hidden = !on;
       if (lblA) lblA.textContent = on ? "Опт A" : "Оптовый прайс";
-      if (lblMa) lblMa.textContent = on ? "Наценка прайса A, USD" : "Наценка, USD";
+      if (tabId === activeCategoryTab) {
+        $("wrap-markup-b-global").hidden = !on;
+        $("lbl-markup-global").textContent = on ? "Наценка A, USD" : "Наценка, USD";
+        $("btn-opt-b").classList.toggle("active-opt", on);
+        $("btn-opt-b").textContent = on ? "Убрать Опт B" : "+ Опт B";
+      }
     }
 
     CATEGORY_IDS.forEach((tabId) => {
-      const mergeCb = $(`merge-${tabId}`);
-      if (mergeCb) {
-        mergeCb.addEventListener("change", () => setMergeUi(tabId, mergeCb.checked));
-      }
       $(`filterShowMissing-${tabId}`).addEventListener("change", () => {
         refreshFilteredOutput(tabId);
       });
     });
 
-    $(`filterShowMissing-mixed`).addEventListener("change", () => {
-      refreshFilteredOutput("mixed");
+    $("btn-opt-b").addEventListener("click", () => {
+      if (!isCategoryTab(activeCategoryTab)) return;
+      const cb = $(`merge-${activeCategoryTab}`);
+      cb.checked = !cb.checked;
+      setMergeUi(activeCategoryTab, cb.checked);
+      saveToolbarToTab(activeCategoryTab);
     });
+
+    $("markup-global").addEventListener("change", () => saveToolbarToTab(activeCategoryTab));
+    $("markup-global").addEventListener("input", () => saveToolbarToTab(activeCategoryTab));
+    $("markup-b-global").addEventListener("change", () => saveToolbarToTab(activeCategoryTab));
+    $("markup-b-global").addEventListener("input", () => saveToolbarToTab(activeCategoryTab));
 
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const tab = btn.dataset.tab;
+        if (isCategoryTab(activeCategoryTab)) saveToolbarToTab(activeCategoryTab);
         document.querySelectorAll(".tab-btn").forEach((b) => b.classList.toggle("active", b === btn));
         document.querySelectorAll(".tab-panel").forEach((p) => {
           p.classList.toggle("active", p.id === "panel-" + tab);
         });
+        loadToolbarFromTab(tab);
       });
     });
+
+    loadToolbarFromTab("iphone");
 
     function runCategoryTab(tabId, endpoint, getExtra) {
       const err = $(`err-${tabId}`);
@@ -794,16 +816,16 @@
       $(`status-${tabId}`).textContent = "";
       $(`btn-${tabId}`).disabled = true;
       $(`out-${tabId}`).value = "";
-      $(`btnDl-${tabId}`).disabled = true;
       lastFullCsv[tabId] = null;
       $(`filterStats-${tabId}`).hidden = true;
 
+      saveToolbarToTab(tabId);
       const merge = $(`merge-${tabId}`).checked;
       const raw = $(`raw-${tabId}`).value;
       const rawB = merge ? $(`raw-b-${tabId}`).value : "";
-      const usd = parseFloat($(`usd-${tabId}`).value);
-      const markup = parseFloat($(`markup-${tabId}`).value);
-      const markupB = merge ? parseFloat($(`markup-b-${tabId}`).value) : 0;
+      const usd = parseFloat($("usd-global").value);
+      const markup = parseFloat($("markup-global").value);
+      const markupB = merge ? parseFloat($("markup-b-global").value) : 0;
 
       if (!raw.trim()) {
         err.textContent = "Вставьте текст оптового прайса.";
@@ -851,7 +873,6 @@
           }
           lastFullCsv[tabId] = text;
           refreshFilteredOutput(tabId);
-          $(`btnDl-${tabId}`).disabled = false;
           const n = text.trim() ? text.trimEnd().split(/\r?\n/).length : 0;
           $(`status-${tabId}`).textContent =
             (merge ? "Объединение. " : "") + "Готово. Строк в прайсе: " + n;
@@ -865,10 +886,128 @@
         });
     }
 
+    function setUnprocessed(rejected) {
+      const lines = Array.isArray(rejected) ? rejected : [];
+      const text = lines.join("\n");
+      $("out-unprocessed").value = text;
+      const empty = !text.trim();
+      $("btnCopy-unprocessed").disabled = empty;
+      $("btnDl-unprocessed").disabled = empty;
+      $("status-unprocessed").textContent = empty
+        ? "Необработанных строк нет."
+        : ("Строк: " + lines.length);
+    }
+
     $("btn-iphone").addEventListener("click", () => {
-      runCategoryTab("iphone", "/process/iphone", () => ({
+      const tabId = "iphone";
+      const err = $(`err-${tabId}`);
+      err.hidden = true;
+      err.textContent = "";
+      $(`status-${tabId}`).textContent = "";
+      $(`btn-${tabId}`).disabled = true;
+      $(`out-${tabId}`).value = "";
+      lastFullCsv[tabId] = null;
+      $(`filterStats-${tabId}`).hidden = true;
+
+      saveToolbarToTab(tabId);
+      const merge = $(`merge-${tabId}`).checked;
+      const raw = $(`raw-${tabId}`).value;
+      const rawB = merge ? $(`raw-b-${tabId}`).value : "";
+      const usd = parseFloat($("usd-global").value);
+      const markup = parseFloat($("markup-global").value);
+      const markupB = merge ? parseFloat($("markup-b-global").value) : 0;
+
+      if (!raw.trim()) {
+        err.textContent = "Вставьте текст оптового прайса.";
+        err.hidden = false;
+        $(`btn-${tabId}`).disabled = false;
+        return;
+      }
+      if (merge && !rawB.trim()) {
+        err.textContent = "Включено объединение: вставьте второй оптовый прайс (Опт B).";
+        err.hidden = false;
+        $(`btn-${tabId}`).disabled = false;
+        return;
+      }
+      if (!(usd > 0) || !(markup >= 0) || (merge && (!(markupB >= 0) || Number.isNaN(markupB)))) {
+        err.textContent = "Укажите корректный курс и наценки (USD).";
+        err.hidden = false;
+        $(`btn-${tabId}`).disabled = false;
+        return;
+      }
+
+      const body = {
+        raw,
+        raw_b: rawB,
+        merge,
+        input_format: $(`fmt-${tabId}`).value,
+        usd_to_byn: usd,
+        markup_usd: markup,
+        markup_usd_b: merge ? markupB : 0,
+        missing_price_text: "по запросу",
+        delimiter_out: ";",
         include_cn_us_13_16: $("includeCnUs-iphone").checked,
-      }));
+      };
+
+      fetch("/process/iphone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.text().then((text) => ({ res, text })))
+        .then(({ res, text }) => {
+          if (!res.ok) {
+            err.textContent = "Ошибка сервера: " + res.status + " — " + text.slice(0, 500);
+            err.hidden = false;
+            return;
+          }
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (e) {
+            err.textContent = "Некорректный JSON-ответ сервера.";
+            err.hidden = false;
+            return;
+          }
+          const csv = data.csv || "";
+          lastFullCsv[tabId] = csv;
+          refreshFilteredOutput(tabId);
+          setUnprocessed(data.rejected || []);
+          const n = csv.trim() ? csv.trimEnd().split(/\r?\n/).length : 0;
+          const rj = (data.rejected || []).length;
+          $(`status-${tabId}`).textContent =
+            (merge ? "Объединение. " : "") +
+            "Готово. Строк в прайсе: " + n +
+            (rj ? ("; необработанных: " + rj) : "");
+        })
+        .catch(() => {
+          err.textContent = "Не удалось связаться с сервером. Запущен ли uvicorn?";
+          err.hidden = false;
+        })
+        .finally(() => {
+          $(`btn-${tabId}`).disabled = false;
+        });
+    });
+
+    $("btnCopy-unprocessed").addEventListener("click", async () => {
+      const payload = $("out-unprocessed").value;
+      if (!payload.trim()) return;
+      try {
+        await navigator.clipboard.writeText(payload);
+        $("status-unprocessed").textContent = "Скопировано.";
+      } catch (e) {
+        $("status-unprocessed").textContent = "Не удалось скопировать.";
+      }
+    });
+    $("btnDl-unprocessed").addEventListener("click", () => {
+      const payload = $("out-unprocessed").value;
+      if (!payload.trim()) return;
+      const blob = new Blob([payload], { type: "text/plain;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "unprocessed.txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
     });
 
     $("btn-iphone17site").addEventListener("click", async () => {
@@ -943,107 +1082,6 @@
       runCategoryTab("macbook", "/process/macbook", () => ({}));
     });
 
-    CATEGORY_IDS.forEach((tabId) => {
-      $(`btnDl-${tabId}`).addEventListener("click", () => {
-        if (!lastFullCsv[tabId]) return;
-        const payload = applyDisplayFilters(lastFullCsv[tabId], tabId);
-        const blob = new Blob([payload], { type: "text/csv;charset=utf-8" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = tabId + "_retail.csv";
-        a.click();
-        URL.revokeObjectURL(a.href);
-      });
-    });
-
-    $("btn-mixed").addEventListener("click", async () => {
-      const err = $("err-mixed");
-      err.hidden = true;
-      err.textContent = "";
-      $("status-mixed").textContent = "";
-      $("btn-mixed").disabled = true;
-      $("out-mixed").value = "";
-      $("btnDl-mixed").disabled = true;
-      lastFullCsv.mixed = null;
-      $("filterStats-mixed").hidden = true;
-
-      const raw = $("raw-mixed").value;
-      const usd = parseFloat($("usd-mixed").value);
-      const markup = parseFloat($("markup-mixed-iphone").value);
-      const markupWatch = parseFloat($("markup-mixed-watch").value);
-      const markupIpad = parseFloat($("markup-mixed-ipad").value);
-      const markupAirPods = parseFloat($("markup-mixed-airpods").value);
-      const markupMacbook = parseFloat($("markup-mixed-macbook").value);
-      const input_format = $("fmt-mixed").value;
-
-      if (!raw.trim()) {
-        err.textContent = "Вставьте текст оптового прайса.";
-        err.hidden = false;
-        $("btn-mixed").disabled = false;
-        return;
-      }
-      if (
-        !(usd > 0) ||
-        !(markup >= 0) ||
-        !(markupWatch >= 0) ||
-        !(markupIpad >= 0) ||
-        !(markupAirPods >= 0) ||
-        !(markupMacbook >= 0)
-      ) {
-        err.textContent =
-          "Укажите корректный курс и все наценки (iPhone, Watch, iPad, AirPods, MacBook) в USD.";
-        err.hidden = false;
-        $("btn-mixed").disabled = false;
-        return;
-      }
-
-      try {
-        const res = await fetch("/process/mixed", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            raw,
-            input_format,
-            usd_to_byn: usd,
-            markup_usd_iphone: markup,
-            markup_usd_watch: markupWatch,
-            markup_usd_ipad: markupIpad,
-            markup_usd_airpods: markupAirPods,
-            markup_usd_macbook: markupMacbook,
-            missing_price_text: "по запросу",
-            delimiter_out: ";",
-            include_cn_us_13_16: $("includeCnUs-mixed").checked,
-          }),
-        });
-        const text = await res.text();
-        if (!res.ok) {
-          err.textContent = "Ошибка сервера: " + res.status + " — " + text.slice(0, 500);
-          err.hidden = false;
-          return;
-        }
-        lastFullCsv.mixed = text;
-        refreshFilteredOutput("mixed");
-        $("btnDl-mixed").disabled = false;
-        const n = text.trim() ? text.trimEnd().split(/\r?\n/).length : 0;
-        $("status-mixed").textContent = "Готово. Строк в прайсе: " + n;
-      } catch (e) {
-        err.textContent = "Не удалось связаться с сервером. Запущен ли uvicorn?";
-        err.hidden = false;
-      } finally {
-        $("btn-mixed").disabled = false;
-      }
-    });
-
-    $("btnDl-mixed").addEventListener("click", () => {
-      if (!lastFullCsv.mixed) return;
-      const payload = applyDisplayFilters(lastFullCsv.mixed, "mixed");
-      const blob = new Blob([payload], { type: "text/csv;charset=utf-8" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "retail_mixed.csv";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    });
   </script>
 </body>
 </html>
