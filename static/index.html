@@ -274,25 +274,14 @@
     }
     @media (max-width: 960px) {
       :root {
-        --textarea-min-h: 42vh;
-        --textarea-merge-h: 30vh;
+        --textarea-min-h: 36vh;
+        --textarea-merge-h: 28vh;
       }
-      body {
-        padding: 0.75rem 0.75rem 1.25rem;
-      }
-      .page-title {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-      /* Вертикальный стек без растягивания на весь экран */
       .app-shell {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        max-width: none;
-        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        max-width: 36rem;
         min-height: 0;
-        gap: 0.75rem;
       }
       .toolbar-left,
       .tabs-row,
@@ -300,71 +289,19 @@
       .col-in,
       .col-out,
       #panel-unprocessed .col-in {
-        grid-column: unset;
-        grid-row: unset;
+        grid-column: 1;
+        grid-row: auto;
         width: 100%;
         max-width: none;
-        margin: 0;
+        margin-left: 0;
         align-self: stretch;
       }
-      .tabs-row { order: 1; }
-      .toolbar-left { order: 2; }
-      .sidebar { order: 3; }
-      .col-in { order: 4; }
-      .col-out { order: 5; }
 
-      /* Вкладки — горизонтальный скролл */
-      .tabs-row {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: 0.35rem;
-        padding-bottom: 0.15rem;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-      }
-      .tab-btn {
-        width: auto;
-        flex: 0 0 auto;
-        padding: 0.5rem 0.7rem;
-        font-size: 0.8125rem;
-      }
-
-      /* Курс / наценка в две колонки */
-      .toolbar-left {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem 0.65rem;
-      }
-      .toolbar-left .btn-opt-b,
-      .toolbar-left #wrap-markup-b-global {
-        grid-column: 1 / -1;
-      }
-      .toolbar-left.hidden-controls {
-        display: none;
-        visibility: visible;
-        pointer-events: auto;
-      }
-
-      .sidebar {
-        width: 100%;
-        max-width: none;
-      }
-      .col {
-        min-height: unset;
-      }
-
-      /* Одно поле опта — нормальная высота */
+      /* Только поля прайса: не схлопывать при Опт B */
       textarea.col-textarea {
         flex: none;
         min-height: var(--textarea-min-h);
-        height: var(--textarea-min-h);
       }
-
-      /*
-        Опт A + Опт B: фиксированная равная высота.
-        На мобилке flex:1 + min-height:0 схлопывал поля в одну строку.
-      */
       .wrap-raw-b:not([hidden]) {
         flex: none;
         min-height: unset;
@@ -374,20 +311,6 @@
         flex: none;
         min-height: var(--textarea-merge-h);
         height: var(--textarea-merge-h);
-      }
-
-      .filters-panel {
-        margin-top: 0.15rem;
-      }
-      button,
-      .toolbar-left .btn-opt-b,
-      .tab-btn {
-        min-height: 2.5rem;
-      }
-      input[type="number"],
-      select {
-        font-size: 1rem; /* меньше автозума iOS */
-        min-height: 2.5rem;
       }
     }
   </style>
