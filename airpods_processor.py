@@ -20,6 +20,9 @@ _TRAIL_SKU = re.compile(
     r"\s+(?:[A-Z]{1,4}\d{2,}[A-Z0-9]*)(?:/[A-Z0-9]+)?\s*$",
     re.IGNORECASE,
 )
+# MKFW4, MKFT4 — одна цифра в конце
+_TRAIL_APPLE_CONFIG = re.compile(r"\s+([A-Z][A-Z0-9]{3,})\s*$", re.IGNORECASE)
+_RE_COLOR_PARENS = re.compile(r"\(([^)]+)\)")
 
 
 @dataclass(frozen=True)
@@ -27,16 +30,57 @@ class AirpodsKey:
     slug: str
 
 
+def _strip_trailing_codes(s: str) -> str:
+    changed = True
+    while changed:
+        changed = False
+        n = _TRAILING_FLAGS.sub("", s)
+        if n != s:
+            s, changed = n.rstrip(), True
+            continue
+        m = _TRAIL_SKU.search(s)
+        if m:
+            s, changed = s[: m.start()].rstrip(), True
+            continue
+        m = _TRAIL_APPLE_CONFIG.search(s)
+        if m and any(c.isdigit() for c in m.group(1)):
+            s, changed = s[: m.start()].rstrip(), True
+    return s
+
+
+def _lift_paren_color(s: str) -> str:
+    """«AirPods 5 MKFW4 (White)» → «AirPods 5 White» (артикул срезается до цвета).
+
+    Год в скобках `(2024)` / `(2026)` не трогаем — это поколение Max, не цвет.
+    """
+    m = _RE_COLOR_PARENS.search(s)
+    if not m:
+        return s
+    inner = m.group(1).strip()
+    if re.fullmatch(r"20\d{2}", inner):
+        return s
+    without = (s[: m.start()] + s[m.end() :]).strip()
+    without = _strip_trailing_codes(without)
+    without = re.sub(r"\s+", " ", without).strip()
+    if not inner:
+        return without
+    return f"{without} {inner}".strip()
+
+
 def _strip_noise(s: str) -> str:
     s = s.strip()
     s = re.sub(r"^[\U0001f3a7\u200d\s\ufe0f]+", "", s)
     s = re.sub(r"\s+", " ", s)
-    s = _TRAILING_FLAGS.sub("", s)
-    while True:
-        m = _TRAIL_SKU.search(s)
-        if not m:
-            break
-        s = s[: m.start()].rstrip()
+    s = _lift_paren_color(s)
+    s = _strip_trailing_codes(s)
+    # Wireless Charging Case → WCC (канон для матча и читаемости)
+    s = re.sub(
+        r"\bwith\s+wireless\s+charging\s+case\b",
+        "WCC",
+        s,
+        flags=re.IGNORECASE,
+    )
+    s = re.sub(r"\bwireless\s+charging\s+case\b", "WCC", s, flags=re.IGNORECASE)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -48,7 +92,7 @@ def _has_airpods_context(orig: str, low: str) -> bool:
         return True
     if re.search(r"\bэйр\s*под", low) or re.search(r"\bейр\s*под", low):
         return True
-    if re.search(r"\bap\s*[234]\b|\bap[234]\b", low):  # AP2 / ap 4
+    if re.search(r"\bap\s*[2345]\b|\bap[2345]\b", low):  # AP2 / ap 5
         return True
     if re.search(r"\bpods?\s+pro\b", low):
         return True
@@ -72,18 +116,23 @@ def _parse_airpods_name(name_raw: str, airpods_map: dict[AirpodsKey, dict]) -> O
         k = AirpodsKey(slug)
         return k if k in airpods_map else None
 
-    # Max (2024) — до Pro / цифр, чтобы не перепутать с «4» в годах
+    # Max (2024) vs Max 2 (2026) — до Pro / цифр
     if re.search(r"\bmax\b", low):
+        is_max2 = bool(
+            re.search(r"\bmax\s*2\b", low)
+            or re.search(r"\b2026\b", low)
+        )
+        prefix = "max2_" if is_max2 else "max_"
         if re.search(r"midnight|полночн", low):
-            return pick("max_midnight")
+            return pick(f"{prefix}midnight")
         if re.search(r"starlight|star\s*light|зв[ёе]зд", low):
-            return pick("max_starlight")
+            return pick(f"{prefix}starlight")
         if re.search(r"\bblue\b|син", low):
-            return pick("max_blue")
+            return pick(f"{prefix}blue")
         if re.search(r"purple|фиол", low):
-            return pick("max_purple")
+            return pick(f"{prefix}purple")
         if re.search(r"orange|оранж", low):
-            return pick("max_orange")
+            return pick(f"{prefix}orange")
 
     # Pro 3 / Pro 2 — до обычных «3»/«2»
     if re.search(r"\bpro\b", low):
@@ -91,6 +140,13 @@ def _parse_airpods_name(name_raw: str, airpods_map: dict[AirpodsKey, dict]) -> O
             return pick("app3")
         if re.search(r"\bpro\s*2\b|\bpro\s+2\b", low):
             return pick("app2")
+
+    is_ap5 = bool(re.search(r"\bap5\b|\bap\s+5\b|\b5\b", low))
+    if is_ap5 and "pro" not in low and "max" not in low:
+        # WCC — до обычных AirPods 5
+        if re.search(r"\bwcc\b|wireless\s+charging", low):
+            return pick("ap5_wcc")
+        return pick("ap5")
 
     # Сокращения AP2 / AP3 / AP4 (цифра не на границе слова в «ap4»)
     if re.search(r"\bap4\b|\bap\s+4\b", low):
