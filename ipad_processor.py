@@ -20,6 +20,9 @@ _TRAIL_SKU = re.compile(
     r"\s+(?:[A-Z]{1,4}\d{2,}[A-Z0-9]*)(?:/[A-Z0-9]+)?\s*$",
     re.IGNORECASE,
 )
+# MD4A4, MC9X4, MVXR3 — одна цифра в середине (не ловит _TRAIL_SKU)
+_TRAIL_APPLE_CONFIG = re.compile(r"\s+([A-Z][A-Z0-9]{3,})\s*$", re.IGNORECASE)
+_RE_COLOR_PARENS = re.compile(r"\(([^)]+)\)")
 
 
 @dataclass(frozen=True)
@@ -33,6 +36,39 @@ class IpadKey:
     year: str = ""  # год поколения в ключе/базе и при разборе опта; в рознице не выводится
 
 
+def _strip_trailing_codes(s: str) -> str:
+    """Срезать хвостовые флаги и артикулы (MD4A4, MCA14…)."""
+    changed = True
+    while changed:
+        changed = False
+        n = _TRAILING_FLAGS.sub("", s)
+        if n != s:
+            s, changed = n.rstrip(), True
+            continue
+        m = _TRAIL_SKU.search(s)
+        if m:
+            s, changed = s[: m.start()].rstrip(), True
+            continue
+        m = _TRAIL_APPLE_CONFIG.search(s)
+        if m and any(c.isdigit() for c in m.group(1)):
+            s, changed = s[: m.start()].rstrip(), True
+    return s
+
+
+def _lift_paren_color(s: str) -> str:
+    """«… 128Gb (Blue) MD4A4» → «… 128Gb Blue» (артикул срезается до цвета)."""
+    m = _RE_COLOR_PARENS.search(s)
+    if not m:
+        return s
+    color = m.group(1).strip()
+    without = (s[: m.start()] + s[m.end() :]).strip()
+    without = _strip_trailing_codes(without)
+    without = re.sub(r"\s+", " ", without).strip()
+    if not color:
+        return without
+    return f"{without} {color}".strip()
+
+
 def _strip_noise(s: str) -> str:
     s = s.strip()
     s = re.sub(r"^[\u25fe\u25aa\u25fc\u2b1b\u231a\ufe0f\s]+", "", s, flags=re.I)
@@ -41,17 +77,17 @@ def _strip_noise(s: str) -> str:
     s = re.sub(r"^▪\s*", "", s)
     s = re.sub(r"[\u201c\u201d\"]", " ", s)
     s = re.sub(r"\s*тонкая\s*", " ", s, flags=re.IGNORECASE)
-    s = _TRAILING_FLAGS.sub("", s)
-    while True:
-        m = _TRAIL_SKU.search(s)
-        if not m:
-            break
-        s = s[: m.start()].rstrip()
+    # Цвет из скобок + срез артикула, стоявшего после «(Color) SKU»
+    s = _lift_paren_color(s)
+    s = _strip_trailing_codes(s)
     s = re.sub(r"nano[- ]?texture\s+glass\s*", "", s, flags=re.IGNORECASE)
     s = re.sub(r"\b1\s*tb\b", "1024 ", s, flags=re.IGNORECASE)
     # «128Gb» / «256GB» слитно с цифрами — для парсера то же, что «128 » / «256 »
     s = re.sub(r"(\d+)\s*gb\b", r"\1 ", s, flags=re.IGNORECASE)
     s = re.sub(r"(\d+)\s*tb\b", r"\1 ", s, flags=re.IGNORECASE)
+    # Алиасы под цвета базы (regex ждёт одиночные gray/black)
+    s = re.sub(r"\bspace\s+gr[ae]y\b", "gray", s, flags=re.IGNORECASE)
+    s = re.sub(r"\bspace\s+black\b", "black", s, flags=re.IGNORECASE)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -71,6 +107,11 @@ def _conn_from_token(tok: Optional[str]) -> Optional[str]:
 
 def _color_canon(raw: str, *, pro: bool = False) -> Optional[str]:
     sl = raw.lower().replace("grey", "gray")
+    sl = re.sub(r"\s+", " ", sl).strip()
+    if sl == "space gray":
+        sl = "gray"
+    if sl == "space black":
+        sl = "black"
     if pro:
         if sl == "black":
             return "Black"

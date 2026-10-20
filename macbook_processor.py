@@ -26,36 +26,60 @@ _TRAIL_SKU = re.compile(
 _TRAIL_APPLE_CONFIG = re.compile(r"\s+([A-Z][A-Z0-9]{3,})\s*$", re.IGNORECASE)
 _RE_APPLE_SKU = re.compile(r"^[A-Z]{2,}\d+[A-Z0-9]*$", re.IGNORECASE)
 
+# Спек после нормализации: 16/512, 24/1TB (год опционален)
+_RE_SPEC = r"(\d+)\s*/\s*(\d+|1[tT][bB])"
+
 _RE_SEC_AIR_PRO = re.compile(
     r"^(?:MacBook\s+)?(Air|Pro)\s+(\d{2})[\"”″]?\s+"
     r"(?:(\d{4})\s+)?"
     r"(M\d+|A\d+)(\s*Pro)?\s+"
-    r"(\d+)\s*/\s*(\d+|1[tT][bB])\s*:\s*$",
+    + _RE_SPEC
+    + r"\s*:\s*$",
     re.IGNORECASE,
 )
 _RE_SEC_NEO = re.compile(
     r"^(?:MacBook\s+)?Neo\s+(?:(\d{4})\s+)?"
     r"(M\d+|A\d+)(\s*Pro)?\s+"
-    r"(\d+)\s*/\s*(\d+|1[tT][bB])\s*:\s*$",
+    + _RE_SPEC
+    + r"\s*:\s*$",
     re.IGNORECASE,
 )
 # Macbook Neo 13 8/256 — без года и без чипа
 _RE_SEC_NEO_V2 = re.compile(
-    r"^(?:MacBook\s+)?Neo\s+\d{2}\s+(\d+)\s*/\s*(\d+|1[tT][bB])\s*:\s*$",
+    r"^(?:MacBook\s+)?Neo\s+\d{2}\s+" + _RE_SPEC + r"\s*:\s*$",
     re.IGNORECASE,
 )
 
 _RE_FULL_NEO = re.compile(
-    r"^MacBook\s+Neo\s+(\d{4})\s+(M\d+|A\d+)(\s*Pro)?\s+"
-    r"(\d+)\s*/\s*(\d+|1[tT][bB])\s+(.+)$",
+    r"^MacBook\s+Neo\s+(?:(\d{4})\s+)?"
+    r"(M\d+|A\d+)(\s*Pro)?\s+"
+    + _RE_SPEC
+    + r"\s+(.+)$",
     re.IGNORECASE,
 )
 _RE_FULL_AIR_PRO = re.compile(
-    r"^MacBook\s+(Air|Pro)\s+(\d{2})[\"”″]?\s+(\d{4})\s+"
+    r"^MacBook\s+(Air|Pro)\s+(\d{2})[\"”″]?\s+(?:(\d{4})\s+)?"
     r"(M\d+|A\d+)(\s*Pro)?\s+"
-    r"(\d+)\s*/\s*(\d+|1[tT][bB])\s+(.+)$",
+    + _RE_SPEC
+    + r"\s+(.+)$",
     re.IGNORECASE,
 )
+
+# 16Gb 1Tb / 8Gb 512Gb → 16/1TB / 8/512; 32/2048Gb → 32/2048
+_RE_SPEC_SPACED_TB = re.compile(
+    r"(\d+)\s*[Gg][Bb]\s+(\d+)\s*[Tt][Bb]\b",
+    re.IGNORECASE,
+)
+_RE_SPEC_SPACED_GB = re.compile(
+    r"(\d+)\s*[Gg][Bb]\s+(\d+)\s*[Gg][Bb]\b",
+    re.IGNORECASE,
+)
+_RE_SPEC_SLASH_GB_SUFFIX = re.compile(
+    r"(\d+)\s*/\s*(\d+)\s*[Gg][Bb]\b",
+    re.IGNORECASE,
+)
+_RE_COLOR_PARENS = re.compile(r"\(([^)]+)\)")
+_RE_TRAIL_REGION = re.compile(r"\s+[A-Z]{2}\s*$")
 
 
 @dataclass(frozen=True)
@@ -91,6 +115,34 @@ def _build_spec(ram: str, storage_tok: str) -> str:
 def _normalize_parse_line(s: str) -> str:
     """Кириллическая «М» (U+041C) вместо латинской M в чипе M3/M4 и т.д."""
     return s.replace("\u041c", "M").replace("\u0421", "C")
+
+
+def _normalize_spec_in_line(s: str) -> str:
+    """16Gb 1Tb / 8Gb 512Gb / 32/2048Gb → канонический слэш-спек."""
+    s = _RE_SPEC_SPACED_TB.sub(lambda m: f"{m.group(1)}/{m.group(2)}TB", s)
+    s = _RE_SPEC_SPACED_GB.sub(lambda m: f"{m.group(1)}/{m.group(2)}", s)
+    s = _RE_SPEC_SLASH_GB_SUFFIX.sub(lambda m: f"{m.group(1)}/{m.group(2)}", s)
+    return s
+
+
+def _lift_paren_color(s: str) -> str:
+    """Цвет в скобках → обычный хвост: «... 16/1TB (Midnight)» → «... 16/1TB Midnight»."""
+    m = _RE_COLOR_PARENS.search(s)
+    if not m:
+        return s
+    color = m.group(1).strip()
+    without = (s[: m.start()] + s[m.end() :]).strip()
+    without = re.sub(r"\s+", " ", without)
+    if not color:
+        return without
+    return f"{without} {color}".strip()
+
+
+def _prepare_full_line(s: str) -> str:
+    s = _normalize_parse_line(s.strip())
+    s = _normalize_spec_in_line(s)
+    s = _lift_paren_color(s)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def _spec_ram_storage_sort(spec: str) -> tuple[int, int]:
@@ -135,6 +187,8 @@ def _strip_macbook_noise(s: str) -> str:
     s = s.strip()
     s = re.sub(r"^[\U0001f4bb\u200d\s\ufe0f]+", "", s)
     s = _TRAILING_FLAGS.sub("", s)
+    # Регион в хвосте (CH, HK…) — мешает срезать артикул Z1LS00027 CH
+    s = _RE_TRAIL_REGION.sub("", s)
     while True:
         m = _TRAIL_SKU.search(s)
         if not m:
@@ -150,6 +204,8 @@ def _strip_macbook_noise(s: str) -> str:
 
 def _parse_section_header(line: str) -> Optional[_SectionCtx]:
     s = _normalize_parse_line(line.strip())
+    s = _normalize_spec_in_line(s)
+    s = re.sub(r"\s+", " ", s).strip()
     m = _RE_SEC_AIR_PRO.match(s)
     if m:
         fam, inch, y, chip_b, pro_s, ra, st = m.groups()
@@ -239,7 +295,7 @@ def _match_color(raw: str, allowed: set[str]) -> Optional[str]:
 def _key_from_parsed(
     family: str,
     inch: str,
-    year: int,
+    year: Optional[int],
     chip: str,
     spec: str,
     color_raw: str,
@@ -250,9 +306,9 @@ def _key_from_parsed(
         for k in all_keys
         if k.family == family
         and k.inch == inch
-        and k.year == year
         and k.chip == chip
         and k.spec == spec
+        and (year is None or k.year == year)
     ]
     if not cands:
         return None
@@ -260,27 +316,32 @@ def _key_from_parsed(
     col = _match_color(color_raw, allowed)
     if not col:
         return None
-    for k in cands:
-        if k.color == col:
-            return k
-    return None
+    matched = [k for k in cands if k.color == col]
+    if not matched:
+        return None
+    if len(matched) == 1:
+        return matched[0]
+    # без года в опте и несколько лет в базе — берём новее
+    return max(matched, key=lambda k: k.year)
 
 
 def _parse_full_macbook_key(clean: str, all_keys: list[MacbookKey]) -> Optional[MacbookKey]:
-    s = _normalize_parse_line(clean.strip())
+    s = _prepare_full_line(clean)
     m = _RE_FULL_NEO.match(s)
     if m:
         year_s, chip_b, pro_s, ra, st, color_raw = m.groups()
         chip = _chip_from_groups(chip_b, pro_s)
         spec = _build_spec(ra, st)
-        return _key_from_parsed("Neo", "", int(year_s), chip, spec, color_raw.strip(), all_keys)
+        year = int(year_s) if year_s else None
+        return _key_from_parsed("Neo", "", year, chip, spec, color_raw.strip(), all_keys)
     m = _RE_FULL_AIR_PRO.match(s)
     if m:
         fam, inch, year_s, chip_b, pro_s, ra, st, color_raw = m.groups()
         chip = _chip_from_groups(chip_b, pro_s)
         spec = _build_spec(ra, st)
+        year = int(year_s) if year_s else None
         return _key_from_parsed(
-            fam, inch, int(year_s), chip, spec, color_raw.strip(), all_keys
+            fam, inch, year, chip, spec, color_raw.strip(), all_keys
         )
     return None
 
