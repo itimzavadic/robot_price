@@ -198,13 +198,21 @@ def _sim_rank(s: str) -> int:
 
 
 def _retail_sort_key(key: DeviceKey) -> tuple:
-    """Сортировка розницы. Air в конце.
+    """Сортировка розницы: … → 17 Pro Max → Air → 18 Pro → …
 
     iPhone 17/18: поколение → вариант → память → цвет → SIM (1+1 / eSim / Dual рядом по цвету).
     Остальные iPhone: поколение → вариант → память → SIM → цвет.
     """
     if key.family == "air":
-        return (2, 0, 0, _memory_rank(key.memory), _sim_rank(key.sim_variant), key.color.lower())
+        # После всех вариантов 17 (variant_rank ≤ 4), до года 18.
+        return (
+            0,
+            17,
+            999,
+            _memory_rank(key.memory),
+            _sim_rank(key.sim_variant),
+            key.color.lower(),
+        )
     if key.family == "iphone" and key.year in (17, 18):
         return (
             0,
