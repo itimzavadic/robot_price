@@ -1,0 +1,13 @@
+[
+  { "family": "duo", "year": 0, "variant": "", "memory": "256", "color": "Night Sky", "sim_variant": "eSim" },
+  { "family": "duo", "year": 0, "variant": "", "memory": "256", "color": "Star White", "sim_variant": "eSim" },
+
+  { "family": "duo", "year": 0, "variant": "", "memory": "512", "color": "Star White", "sim_variant": "eSim" },
+  { "family": "duo", "year": 0, "variant": "", "memory": "512", "color": "Night Sky", "sim_variant": "eSim" },
+
+  { "family": "duo", "year": 0, "variant": "", "memory": "1TB", "color": "Night Sky", "sim_variant": "eSim" },
+  { "family": "duo", "year": 0, "variant": "", "memory": "1TB", "color": "Star White", "sim_variant": "eSim" },
+
+  { "family": "duo", "year": 0, "variant": "", "memory": "2TB", "color": "Night Sky", "sim_variant": "eSim" },
+  { "family": "duo", "year": 0, "variant": "", "memory": "2TB", "color": "Star White", "sim_variant": "eSim" }
+]

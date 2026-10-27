@@ -61,6 +61,7 @@ def _startup() -> None:
         base_air_path=Path(__file__).parent / "data" / "apple_iphone_air_base.json",
         base_17_path=Path(__file__).parent / "data" / "apple_iphone_17_base.json",
         base_18_path=Path(__file__).parent / "data" / "apple_iphone_18_base.json",
+        base_duo_path=Path(__file__).parent / "data" / "apple_iphone_duo_base.json",
     )
     WATCH_ORDER, WATCH_BASE = load_watch_base(Path(__file__).parent / "data" / "apple_watch_base.json")
     IPAD_ORDER, IPAD_BASE = load_ipad_base(Path(__file__).parent / "data" / "apple_ipad_base.json")

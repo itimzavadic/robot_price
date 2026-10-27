@@ -15,13 +15,19 @@ from price_merge import merge_min_byn
 
 @dataclass(frozen=True)
 class DeviceKey:
-    # family: "iphone" (years 13-18), "air" (iPhone Air)
+    # family: "iphone" (years 13-18), "air" (iPhone Air), "duo" (iPhone Duo)
     family: str
-    year: int  # for air: 0
+    year: int  # for air/duo: 0
     variant: str  # "", "Plus", "Pro", "Pro Max", "e"
     memory: str  # "128" | "256" | "512" | "1TB" | ...
     color: str  # canonical color
     sim_variant: str  # "1+1" | "eSim" | "dual"
+
+
+_DUO_COLORS: tuple[tuple[str, str], ...] = (
+    ("night sky", "Night Sky"),
+    ("star white", "Star White"),
+)
 
 
 IPHONE_ICON = "📱"
@@ -42,9 +48,14 @@ def _format_model_line(key: DeviceKey, *, show_13_16_sim_labels: bool = False) -
     iPhone 13–16: при выключенном доп. фильтре тип SIM не показываем (стандарт 1+1).
     При включённом — показываем 1+1 / eSim / Dual (без флагов стран).
     Air, iPhone 17 и iPhone 18 — тип SIM в названии всегда.
+    Duo — без SIM в названии (как в эталонном списке).
     """
     if key.family == "air":
         core = f"Air {key.memory} {key.color} {key.sim_variant}"
+        return f"{IPHONE_ICON}{core}"
+
+    if key.family == "duo":
+        core = f"Duo {key.memory} {key.color}"
         return f"{IPHONE_ICON}{core}"
 
     if key.family == "iphone" and key.year in (17, 18):
@@ -198,7 +209,7 @@ def _sim_rank(s: str) -> int:
 
 
 def _retail_sort_key(key: DeviceKey) -> tuple:
-    """Сортировка розницы: … → 17 Pro Max → Air → 18 Pro → …
+    """Сортировка розницы: … → 17 Pro Max → Air → 18 Pro → … → Duo.
 
     iPhone 17/18: поколение → вариант → память → цвет → SIM (1+1 / eSim / Dual рядом по цвету).
     Остальные iPhone: поколение → вариант → память → SIM → цвет.
@@ -208,6 +219,16 @@ def _retail_sort_key(key: DeviceKey) -> tuple:
         return (
             0,
             17,
+            999,
+            _memory_rank(key.memory),
+            _sim_rank(key.sim_variant),
+            key.color.lower(),
+        )
+    if key.family == "duo":
+        # После всех вариантов 18.
+        return (
+            0,
+            18,
             999,
             _memory_rank(key.memory),
             _sim_rank(key.sim_variant),
@@ -233,9 +254,11 @@ def _retail_sort_key(key: DeviceKey) -> tuple:
 
 
 def _model_group_for_separator(key: DeviceKey) -> tuple:
-    """Группа «модели» для линии-разделителя из тире (год + вариант; Air отдельно)."""
+    """Группа «модели» для линии-разделителя из тире (год + вариант; Air/Duo отдельно)."""
     if key.family == "air":
         return ("air",)
+    if key.family == "duo":
+        return ("duo",)
     return ("iphone", key.year, key.variant)
 
 
@@ -345,6 +368,47 @@ def _extract_air_key(name_raw: str) -> Optional[DeviceKey]:
 
     color_title = color_raw[:1].upper() + color_raw[1:]
     return DeviceKey(family="air", year=0, variant="", memory=memory, color=color_title, sim_variant="eSim")
+
+
+def _match_duo_color(lowered: str) -> Optional[str]:
+    compact = re.sub(r"\s+", " ", lowered)
+    nospace = re.sub(r"[\s\-]+", "", compact)
+    for needle, canon in _DUO_COLORS:
+        if needle in compact or needle.replace(" ", "") in nospace:
+            return canon
+    return None
+
+
+def _extract_duo_key(name_raw: str) -> Optional[DeviceKey]:
+    s = base_proc._normalize_text(name_raw)
+    lowered = s.lower()
+    if not re.search(r"\bduo\b", lowered):
+        return None
+
+    memory = None
+    if re.search(r"\b2\s*tb\b|\b2tb\b", lowered):
+        memory = "2TB"
+    elif re.search(r"\b1\s*tb\b|\b1tb\b", lowered):
+        memory = "1TB"
+    elif re.search(r"\b512\b", lowered):
+        memory = "512"
+    elif re.search(r"\b256\b", lowered):
+        memory = "256"
+    if memory is None:
+        return None
+
+    color = _match_duo_color(lowered)
+    if color is None:
+        return None
+
+    return DeviceKey(
+        family="duo",
+        year=0,
+        variant="",
+        memory=memory,
+        color=color,
+        sim_variant="eSim",
+    )
 
 
 def _extract_iphone17_key(name_raw: str) -> Optional[DeviceKey]:
@@ -502,11 +566,14 @@ def extract_device_key(name_raw: str) -> Optional[DeviceKey]:
     # См. wholesale_line_skips_iphone_13_16_parsing — та же логика, что и в process_iphone_all.
     if base_proc.wholesale_line_skips_iphone_13_16_parsing(name_raw):
         return None
-    # Priority: 18 before 17; Air before 13–16.
+    # Priority: 18 before 17; Duo/Air before 13–16.
     key = _extract_iphone18_key(name_raw)
     if key is not None:
         return key
     key = _extract_iphone17_key(name_raw)
+    if key is not None:
+        return key
+    key = _extract_duo_key(name_raw)
     if key is not None:
         return key
     key = _extract_air_key(name_raw)
@@ -539,6 +606,7 @@ def load_all_iphone_base(
     base_air_path: Path,
     base_17_path: Path,
     base_18_path: Path,
+    base_duo_path: Optional[Path] = None,
 ) -> tuple[list[DeviceKey], dict[DeviceKey, dict]]:
     base_order: list[DeviceKey] = []
     base_map: dict[DeviceKey, dict] = {}
@@ -560,6 +628,8 @@ def load_all_iphone_base(
     _load_sim_base_items(base_air_path, base_order, base_map)
     _load_sim_base_items(base_17_path, base_order, base_map)
     _load_sim_base_items(base_18_path, base_order, base_map)
+    if base_duo_path is not None:
+        _load_sim_base_items(base_duo_path, base_order, base_map)
 
     return base_order, base_map
 
@@ -596,6 +666,10 @@ def _looks_like_iphone_sku_line(name_raw: str) -> bool:
     if re.search(r"\bair\b", lowered) and not re.search(r"\bair\s*pods?\b", lowered):
         if re.search(r"\b(256|512|1\s*tb|2\s*tb)\b", lowered):
             return True
+    if re.search(r"\bduo\b", lowered) and re.search(
+        r"\b(256|512|1\s*tb|2\s*tb)\b", lowered
+    ):
+        return True
     if re.search(r"\b(13|14|15|16|17|18)\b", lowered) and re.search(
         r"\b(pro|max|plus|e\s*-?sim|sim|256|512|1\s*tb|2\s*tb|black|blue|silver|white)\b",
         lowered,
@@ -734,6 +808,16 @@ def collect_iphone_all_best_byn_from_text(
                 _append_rejected(rejected, rejected_seen, _reject_display_line(name_raw, price_raw))
                 continue
             _update_best_price(best_numeric, has_numeric, ka, price_byn)
+            continue
+
+        kd = _extract_duo_key(name_raw)
+        if kd is not None:
+            if not include_cn_us_13_16 and is_hk:
+                continue
+            if kd not in base:
+                _append_rejected(rejected, rejected_seen, _reject_display_line(name_raw, price_raw))
+                continue
+            _update_best_price(best_numeric, has_numeric, kd, price_byn)
             continue
 
         if base_proc.wholesale_line_skips_iphone_13_16_parsing(name_raw):
