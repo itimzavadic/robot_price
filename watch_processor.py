@@ -17,7 +17,7 @@ WATCH_ICON = "⌚️"
 
 # Порядок важен: более длинные серии раньше.
 _SERIES_PATTERN = re.compile(
-    r"^(Ultra 3 2025|Ultra 2 2024|SE 3 2025|SE 2|SE 2023|S12|S11|S10)\s+",
+    r"^(Ultra 4 2026|Ultra 3 2025|Ultra 2 2024|SE 3 2025|SE 2|SE 2023|S12|S11|S10)\s+",
     re.IGNORECASE,
 )
 
@@ -49,6 +49,7 @@ def _series_canon(raw: str) -> str:
     if k == "se 2023":
         return "SE 2"
     mapping = {
+        "ultra 4 2026": "Ultra 4 2026",
         "ultra 3 2025": "Ultra 3 2025",
         "ultra 2 2024": "Ultra 2 2024",
         "se 3 2025": "SE 3 2025",
